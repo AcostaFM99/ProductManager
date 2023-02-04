@@ -63,7 +63,7 @@ class ProductManager{
         let productos = await this.getProduct;
         let productoid = productos.find((product)=>product.id === id);
         if(productoid === id){
-            products[productoid].title = title;
+            productos[productoid].title = title;
             productos[productoid].description = description;
             productos[productoid].price = price;
             productos[productoid].thumbnail = thumbnail;
