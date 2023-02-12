@@ -1,7 +1,4 @@
-const fs = require('fs');
-
-
-
+import fs from "fs";
 
 class product{
     constructor(id, title, description, price, thumbnail, code, stock){
@@ -15,8 +12,7 @@ class product{
     }
 }
 
-
-class ProductManager{
+export default class ProductManager{
     constructor(path){
 
         this.path= path;
@@ -26,7 +22,7 @@ class ProductManager{
     async getProduct(){
         if(fs.existsSync(this.path)){
             let lectura = await fs.promises.readFile(this.path,"utf-8");
-            return JSON.parse(lectura);
+            return JSON.parse(lectura);W
         }else{
             return[];
         }
@@ -78,6 +74,6 @@ class ProductManager{
         let productoid = product.find((product)=>product.id === id);
         productos[productoid] = {};
         await fs.promises.writeFile(this.path, JSON.stringify(productos, null, 4))
-
     }
 }
+
