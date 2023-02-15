@@ -28,9 +28,6 @@ export default class ProductManager{
             return[];
         }
     }
-
-
-
     async addProducts(title, description, price, thumbnail, code, stock) {
         let productos = await this.getProduct();
         let productoCreado = productos.findIndex((product) => product.code === code) !== -1;
@@ -69,9 +66,9 @@ export default class ProductManager{
           productos[productIndex].code = code;
           productos[productIndex].stock = stock;
           await fs.promises.writeFile(this.path, JSON.stringify(productos, null, 2));
-          console.log(`Product ${title} with ID ${id} updated successfully`);
+          console.log(`El producto ${title} con el id: ${id} se actualizo correctamente`);
         } else {
-          console.log("Product not found.");
+          console.log("Producto no encontrado.");
         }
       }
 
@@ -83,9 +80,9 @@ export default class ProductManager{
         if (productExists) {
           productos[productIndex] = {};
           await fs.promises.writeFile(this.path, JSON.stringify(productos, null, 2));
-          console.log(`Product with ID ${id} deleted successfully`);
+          console.log(`El producto con el id ${id} se borro correctamente`);
         } else {
-          console.log("Product not found.");
+          console.log("Producto no encontrado.");
         }
       }
 
