@@ -87,12 +87,13 @@ export default class ProductManager{
       }
 
 
-}
+    }
 
+//
 // let p = new ProductManager('../files/products.json');
 // p.getProduct().then(product => console.log(product));
 // p.addProducts("producto prueba1", "Este es un producto prueba1", 20, "Sin imagen", "code128", 25);
 // p.getProduct().then(products => console.log(products));
 // p.getProductById(1);
 //p.deleteProduct(3);
-
+//
