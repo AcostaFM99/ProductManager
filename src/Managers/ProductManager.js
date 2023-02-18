@@ -1,4 +1,4 @@
-import { Console } from "console";
+
 import fs from "fs";
 
 class Product {
@@ -17,6 +17,7 @@ export default class ProductManager {
   constructor(path) {
     this.path = path;
   }
+
 
   async getProduct() {
     if (fs.existsSync(this.path)) {
@@ -62,13 +63,8 @@ export default class ProductManager {
       productos[productIndex].thumbnail = thumbnail;
       productos[productIndex].code = code;
       productos[productIndex].stock = stock;
-      await fs.promises.writeFile(
-        this.path,
-        JSON.stringify(productos, null, 2)
-      );
-      console.log(
-        `El producto ${title} con el id: ${id} se actualizo correctamente`
-      );
+      await fs.promises.writeFile(this.path,JSON.stringify(productos, null, 2));
+      console.log(`El producto ${title} con el id: ${id} se actualizo correctamente`);
     } else {
       console.log("Producto no encontrado.");
     }
@@ -80,16 +76,17 @@ export default class ProductManager {
     let productExists = productIndex !== -1;
     if (productExists) {
       productos[productIndex] = {};
-      await fs.promises.writeFile(
-        this.path,
-        JSON.stringify(productos, null, 2)
-      );
+      await fs.promises.writeFile(this.path,JSON.stringify(productos, null, 2));
       console.log(`El producto con el id ${id} se borro correctamente`);
+      return(true);
     } else {
       console.log("Producto no encontrado.");
+      return(false);
     }
   }
 }
+
+
 
 // let p = new ProductManager('../files/products.json');
 // p.getProduct().then(product => console.log(product));
