@@ -1,15 +1,16 @@
 import { Router } from "express"; 
 import ProductManager from "../Managers/ProductManager.js";
+import { __dirname } from "../utils.js";
 
 const router = Router();
-let pm = new ProductManager("../../files/products.json");
+let pm = new ProductManager(__dirname+"/files/products.json");
 
 router.get("/", async (req, res) => {
     let limit = req.query.limit;
     let products = await pm.getProduct();
     res.setHeader("Content-Type", "application/json");
     res.status(200).json({ products: products.slice(0, limit) });
-  });
+});
   
 router.get("/:pid", async (req, res) => {
     let id = req.params.pid;
@@ -20,18 +21,25 @@ router.get("/:pid", async (req, res) => {
     } else {
       res.status(400), json({ error: "el producto no existe" });
     }
-  });
+});
   
 router.post("/", async (req, res) => {
-      let product = req.body;
-      res.setHeader("Content-Type", "application/json");
-      if ( !product.title || !product.description || !product.code || !product.price || !product.status || !product.stock || !product.category || !product.thumbnails) {
-        res.status(400).json({ error: "faltan campos por completar." });
-      } else {
-      product = await pm.addProducts(product);
-      res.status(201).json({ message: `Se agrego correctamtene el producto: `, product });
-      }
-  });
+    let product = req.body;
+    let productExists = await pm.addProducts(product)
+    res.setHeader("Content-Type", "application/json");
+    if ( !product.title || !product.description || !product.code || !product.price || !product.status || !product.stock || !product.category || !product.thumbnails) {
+      console.log(`Faltan campos por completar.`);
+      res.status(400).json({ error: "faltan campos por completar." });
+    }else{
+      if(productExists){
+        res.status(400).json({error: `El producto ya existe.`});
+        } else {
+        product = await pm.addProducts(product);
+        res.status(201).json({ message: `Se agrego correctamtene el producto.`});
+        }
+    }
+    
+});
   
 router.put('/:pid',async (req,res)=>{
     let id = req.params.pid;
@@ -44,7 +52,7 @@ router.put('/:pid',async (req,res)=>{
       product = await pm.updateProduct(updateProduct);
       res.status(200).json({message: `El producto con id: ${id} se actualizo correctamente.` });
     };
-  });
+});
   
 router.delete('/:pid',async (req,res)=>{
     let id = req.params.pid;
@@ -55,7 +63,7 @@ router.delete('/:pid',async (req,res)=>{
     }else{
       res.status(400).json({error:`El producto con id: ${id} no se encontro, no existe o no se pudo eliminar`});
     };
-  });
+});
   
 
 export default router;

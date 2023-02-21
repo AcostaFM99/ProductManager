@@ -1,15 +1,17 @@
-
+import { v4 as createID } from "uuid";
 import fs from "fs";
 
 class Product {
-  constructor(id, title, description, price, thumbnail, code, stock) {
+  constructor(id, title, description, code, price, status, thumbnail, stock) {
     this.id = id;
     this.title = title;
     this.description = description;
-    this.price = price;
-    this.thumbnail = thumbnail;
     this.code = code;
+    this.price = price;
+    this.status = status
     this.stock = stock;
+    this.thumbnail = thumbnail;
+  
   }
 }
 
@@ -27,19 +29,26 @@ export default class ProductManager {
       return [];
     }
   }
-  async addProducts(title, description, price, thumbnail, code, stock) {
+  
+  async   addProducts(product) {
+    let {title, description, code, price, status, stock, category, thumbnails} = product;
     let productos = await this.getProduct();
     let productoCreado = productos.findIndex((product) => product.code === code) !== -1;
-    let contenidoBasio = !(title && description && price && thumbnail && code && stock);
-    if (productoCreado || contenidoBasio) {
+    if (productoCreado) {
       console.log(`El producto ya existe`);
+      return(true);
     } else {
-    let id = productos.length + 1;
-    let newProduct = new Product(id,title,description,price,thumbnail,code,stock);
+    let id = createID();
+    id = id.slice(1,6);
+    status === "false" ? (status = true) : (status = false);
+    let newProduct = new Product(id, title, description, code, price, status, stock, category, thumbnails);
     productos.push(newProduct);
     await fs.promises.writeFile(this.path, JSON.stringify(productos, null, 2));
     console.log(`Producto ${title} agregado bajo el id: ${id}`);
     }
+
+    
+    
   }
 
   async getProductById(id) {

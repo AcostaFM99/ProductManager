@@ -1,0 +1,22 @@
+[
+  {
+    "id": "a3247283-4782-4ee3-a7ca-4463285e1c66",
+    "title": "Pintura1",
+    "description": "pintura de latex",
+    "code": "123",
+    "price": "123",
+    "status": true,
+    "stock": "pintura",
+    "thumbnail": "123"
+  },
+  {
+    "id": "b51a9",
+    "title": "Pintura2",
+    "description": "pintura de exterior",
+    "code": "124",
+    "price": "124",
+    "status": true,
+    "stock": "pintura",
+    "thumbnail": "124"
+  }
+]

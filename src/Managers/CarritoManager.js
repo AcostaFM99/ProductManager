@@ -1,10 +1,13 @@
 import fs from "fs";
+import { v4 as createID } from "uuid";
+import { __dirname } from "../utils.js";
+import ProductManager from "../Managers/ProductManager.js";
 
-
+let pm = new ProductManager(__dirname+"/files/products.json");
 class Carrito{
     constructor(id,productId =[]){
         this.id = id;
-        this.productId = productId;
+        this.product = productId;
     }
 
 }
@@ -26,7 +29,8 @@ export default class CarritoManager{
 
     async CreateCarrito (){
         let carrito = await this.getCarrito();
-        let id = carrito.length ++;
+        let id = createID();
+        id = id.slice(1,6);
         let newCarrito = new Carrito(id);
         carrito.push(newCarrito);
         await fs.promises.writeFile(this.path, JSON.stringify(carrito, null,4));
@@ -36,7 +40,7 @@ export default class CarritoManager{
 
     async carritoById(id){
         let carrito= await this.getCarrito();
-        let carritoId = carrito.find(carrito => carrito.id === id);
+        let carritoId = carrito.findIndex(carrito => carrito.id == id);
         if(carritoId){
             let status = 200; 
             return(`Se creo el carrito correctamente bajo el id: ${carritoId}`,status);
@@ -47,26 +51,37 @@ export default class CarritoManager{
     }
 
     async addProductCarrito (carritoId,product){
-        let carrito = await this.getCarrito()
-        let carritoIndex = carrito.findIndex(carrito=> carrito.id === carritoId);
-        let carritoExist = carritoIndex === -1;
+        let carrito = await this.getCarrito();
+        let carritoIndex = carrito.findIndex(carrito=> carrito.id == carritoId);
+        let carritoExist = carritoIndex != -1;
+        let productos = await pm.getProduct();
+        let productIndex = productos.findIndex((p) => p.id == product);
+        let productExists = productIndex !== -1;
         if(carritoExist){
-            let productIndex = carrito[carritoIndex].product.findIndex(p => p.product === product);
-            let productExists = productIndex !== -1;
             if(productExists){
-                carrito[carritoIndex].product[productIndex].quantity++;
-                let status = 200; 
-                await fs.promises.writeFile(this.path, JSON.stringify(carrito, null, 4));
-                return(`Se agrego el producto correctamente, en el carrito con id: ${carritoIndex}`, status);
+                let productIndex = carrito[carritoIndex].product.findIndex(p => p.product == product);
+                let productExistsCar = productIndex !== -1;
+                if(productExistsCar){
+                    carrito[carritoIndex].product[productIndex].quantity++;
+                    let status = 200; 
+                    await fs.promises.writeFile(this.path, JSON.stringify(carrito, null, 4));
+                    return(`Se agrego el producto correctamente, en el carrito con id: ${carritoId}`, status);
+                }else{
+                    let status = 200; 
+                    carrito[carritoIndex].product.push({product, quantity:1});
+                    await fs.promises.writeFile(this.path, JSON.stringify(carrito, null, 4));
+                    console.log(`Se agrego el producto correctamente, en el carrito con id: ${carritoId}`);
+                    return[`Se agrego el producto correctamente, en el carrito con id: ${carritoId}`, status];
+                }
             }else{
-                let status = 200; 
-                carrito[carritoIndex].productId.push(product);
-                await fs.promises.writeFile(this.path, JSON.stringify(carrito, null, 4));
-                return(`Se agrego el producto correctamente, en el carrito con id: ${carritoIndex}`, status);
+                let status= 404;
+                console.log(`El producto que inteta agregar es inexistente en la base de datos.`);
+                return[`El producto que inteta agregar es inexistente en la base de datos.`, status];
             }
         }else{
             let status = 400;
-            return(`El carrito con id: ${carritoId}, no existe, debe crear uno nuevo`, status);
+            console.log(`El carrito con id: ${carritoId}, no existe, debe crear uno nuevo`);
+            return[`El carrito con id: ${carritoId}, no existe, debe crear uno nuevo`, status];
         }
         
 

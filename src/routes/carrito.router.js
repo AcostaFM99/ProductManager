@@ -1,8 +1,9 @@
 import { Router } from "express"; 
 import CarritoManager from "../Managers/CarritoManager.js";
+import {__dirname} from "../utils.js";
 
 const router = Router();
-let cr = new CarritoManager('../../files/carrito.json')
+let cr = new CarritoManager(__dirname+'/files/carrito.json')
 
 
 router.post('/',async (req,res)=>{
@@ -28,12 +29,17 @@ router.post('/:cid/product/:pid',async(req,res)=>{
     let carritoId = req.params.cid;
     let productId = req.params.pid;
     let respuesta = await cr.addProductCarrito(carritoId,productId);
-    
-    if(respuesta == 200){
-        res.status(200).json({respuesta});
-    }else{
-        res.status(400).json({respuesta})
-    }
+    switch (respuesta[1]) {
+        case 200:
+            res.status(200).json({respuesta:respuesta[0],});
+            break;
+        case 400:
+            res.status(400).json({respuesta:respuesta[0],});
+            break;
+        case 404:
+            res.status(404).json({respuesta:respuesta[0],});
+            break;
+    };
 });
 
 export default router;

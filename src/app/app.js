@@ -1,5 +1,5 @@
 import express from "express";
-import { __dirname } from "../utilis/utils.js";
+import { __dirname } from "../utils.js";
 const PORT = 8080;
 const app = express();
 import productRouter from '../routes/products.router.js';
