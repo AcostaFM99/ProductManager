@@ -12,14 +12,14 @@ router.post('/',async (req,res)=>{
     res.status(200).json({Message:`Se creo el carrito correctamente bajo el id: ${carritoId}`});
 });
 
-router.get('/:cid',(req,res)=>{
+router.get('/:cid',async(req,res)=>{
     res.setHeader('Content-Type','application/json');
     let Id = req.params.cid
-    let respuesta = cr.carritoById(Id);
-    if(respuesta == 200){
-        res.status(200).json({respuesta});
+    let respuesta = await cr.carritoById(Id);
+    if(respuesta[1] == 200){
+        res.status(200).json([respuesta[0]]);
     }else{
-        res.status(400).json({respuesta})
+        res.status(400).json([respuesta[0]]);
     }
     
 });
@@ -36,7 +36,7 @@ router.post('/:cid/product/:pid',async(req,res)=>{
         case 400:
             res.status(400).json({respuesta:respuesta[0],});
             break;
-        case 404:
+        default:
             res.status(404).json({respuesta:respuesta[0],});
             break;
     };

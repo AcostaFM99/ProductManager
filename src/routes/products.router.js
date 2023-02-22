@@ -15,11 +15,12 @@ router.get("/", async (req, res) => {
 router.get("/:pid", async (req, res) => {
     let id = req.params.pid;
     let product = await pm.getProductById(id);
+    let productIndex = product != -1;
     res.setHeader("Content-Type", "application/json");
-    if (product) {
-      res.status(200), json({ product });
+    if (productIndex) {
+      res.status(200).json({ message:`Este es el producto bajo el id: ${id}`,product });
     } else {
-      res.status(400), json({ error: "el producto no existe" });
+      res.status(400).json({ error: "el producto no existe" });
     }
 });
   

@@ -18,5 +18,45 @@
     "status": true,
     "stock": "pintura",
     "thumbnail": "124"
+  },
+  {
+    "id": "c9b31",
+    "title": "Pintura3",
+    "description": "pintura de exterior",
+    "code": "125",
+    "price": "124",
+    "status": true,
+    "stock": "pintura",
+    "thumbnail": "124"
+  },
+  {
+    "id": "6caf1",
+    "title": "Pintura4",
+    "description": "pintura de exterior",
+    "code": "126",
+    "price": "124",
+    "status": true,
+    "stock": "pintura",
+    "thumbnail": "124"
+  },
+  {
+    "id": "b924d",
+    "title": "Pintura5",
+    "description": "pintura de exterior",
+    "code": "127",
+    "price": "124",
+    "status": "true",
+    "stock": "pintura",
+    "thumbnail": "124"
+  },
+  {
+    "id": "52c19",
+    "title": "Pintura6",
+    "description": "pintura de exterior",
+    "code": "128",
+    "price": "124",
+    "status": "true",
+    "stock": "pintura",
+    "thumbnail": "124"
   }
 ]

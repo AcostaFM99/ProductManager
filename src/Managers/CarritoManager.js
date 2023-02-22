@@ -40,13 +40,14 @@ export default class CarritoManager{
 
     async carritoById(id){
         let carrito= await this.getCarrito();
-        let carritoId = carrito.findIndex(carrito => carrito.id == id);
-        if(carritoId){
+        let carritoById = carrito.find(carrito => carrito.id == id);
+        let carritoIndex = carritoById != -1;
+        if(carritoIndex){
             let status = 200; 
-            return(`Se creo el carrito correctamente bajo el id: ${carritoId}`,status);
+            return[`Este es el carrito bajo id: ${id} ${carritoById}`,status];
         }else{
             let status = 400;
-            return(`El carrito con el Id: ${id} ya existe`,status);
+            return[`El carrito con el Id:${id}, no existe`,status];
         }
     }
 
@@ -65,7 +66,7 @@ export default class CarritoManager{
                     carrito[carritoIndex].product[productIndex].quantity++;
                     let status = 200; 
                     await fs.promises.writeFile(this.path, JSON.stringify(carrito, null, 4));
-                    return(`Se agrego el producto correctamente, en el carrito con id: ${carritoId}`, status);
+                    return[`Se agrego el producto correctamente, en el carrito con id: ${carritoId}`, status];
                 }else{
                     let status = 200; 
                     carrito[carritoIndex].product.push({product, quantity:1});
