@@ -61,17 +61,23 @@ export default class ProductManager {
     }
   }
 
-  async updateProduct(id, title, description, price, thumbnail, code, stock) {
+
+  // tengo que arreglar esta funcion
+  //id, title, description, price, thumbnail, code, stock
+  async updateProduct(product) {
+    let {id, title, description, code, price, status, stock, category, thumbnails} = product;
     let productos = await this.getProduct();
     let productIndex = productos.findIndex((product) => product.id === id);
     let productExists = productIndex !== -1;
     if (productExists) {
+      status = true;
       productos[productIndex].title = title;
       productos[productIndex].description = description;
       productos[productIndex].price = price;
-      productos[productIndex].thumbnail = thumbnail;
-      productos[productIndex].code = code;
+      productos[productIndex].thumbnail = thumbnails;
+      productos[productIndex].stock = status;
       productos[productIndex].stock = stock;
+      productos[productIndex].stock = category;
       await fs.promises.writeFile(this.path,JSON.stringify(productos, null, 2));
       console.log(`El producto ${title} con el id: ${id} se actualizo correctamente`);
     } else {
