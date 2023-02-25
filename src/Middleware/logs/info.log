@@ -49,3 +49,15 @@
  LOG: POST - /?dsdas - Sat, 25 Feb 2023 06:29:41 GMT
  LOG: POST - /?dsdas - Sat, 25 Feb 2023 06:30:30 GMT
  LOG: GET - / - Sat, 25 Feb 2023 06:30:59 GMT
+ LOG: GET - / - Sat, 25 Feb 2023 07:39:04 GMT
+ LOG: GET - / - Sat, 25 Feb 2023 07:39:05 GMT
+ LOG: GET - / - Sat, 25 Feb 2023 07:40:59 GMT
+ LOG: GET - / - Sat, 25 Feb 2023 07:41:03 GMT
+ LOG: GET - / - Sat, 25 Feb 2023 07:41:07 GMT
+ LOG: GET - / - Sat, 25 Feb 2023 07:52:11 GMT
+ LOG: GET - / - Sat, 25 Feb 2023 07:52:53 GMT
+ Descripcion del erro Error: Failed to lookup view "home" in views directory "C:\Users\Facundo Acosta\Desktop\ProgramacionBackEnd\ProductManager\src/views"
+ LOG: GET - / - Sat, 25 Feb 2023 07:54:05 GMT
+ Descripcion del erro Error: Failed to lookup view "home" in views directory "C:\Users\Facundo Acosta\Desktop\ProgramacionBackEnd\ProductManager\src/views"
+ LOG: GET - / - Sat, 25 Feb 2023 07:54:26 GMT
+ Descripcion del error: Error: Failed to lookup view "home" in views directory "C:\Users\Facundo Acosta\Desktop\ProgramacionBackEnd\ProductManager\src/views"

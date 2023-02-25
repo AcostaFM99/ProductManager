@@ -27,7 +27,7 @@ router.get("/:pid", async (req, res) => {
     }
 });
   
-router.post("/",upload.single('thumbnails'),Middleware.midd1, async (req, res) => {
+router.post("/",upload.single('thumbnails'),Middleware.midd1,Middleware.midd2, async (req, res) => {
     res.setHeader("Content-Type", "application/json");
     let {title, description, code, price, status, stock, category, thumbnails} = req.body;
     let camposVacios = !title && description && code && price && status && stock && category && thumbnails
