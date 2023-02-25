@@ -1,6 +1,7 @@
 import { Router } from "express"; 
 import ProductManager from "../Managers/ProductManager.js";
 import { __dirname } from "../utils.js";
+import upload from "../utils.js";
 
 const router = Router();
 let pm = new ProductManager(__dirname+"/files/products.json");
@@ -24,7 +25,7 @@ router.get("/:pid", async (req, res) => {
     }
 });
   
-router.post("/", async (req, res) => {
+router.post("/",upload.single('thumbnails'), async (req, res) => {
     let product = req.body;
     let productExists = await pm.addProducts(product)
     res.setHeader("Content-Type", "application/json");
