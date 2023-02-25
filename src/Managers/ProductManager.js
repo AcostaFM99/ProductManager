@@ -30,22 +30,27 @@ export default class ProductManager {
     }
   }
   
-  async   addProducts(product) {
-    let {title, description, code, price, status, stock, category, thumbnails} = product;
-    let productos = await this.getProduct();
-    let productoCreado = productos.findIndex((product) => product.code === code) !== -1;
-    if (productoCreado) {
-      console.log(`El producto ya existe`);
-      return(true);
-    } else {
-    let id = createID();
-    id = id.slice(1,6);
-    status === "false" ? (status = true) : ``;
-    let newProduct = new Product(id, title, description, code, price, status, stock, category, thumbnails);
-    productos.push(newProduct);
-    await fs.promises.writeFile(this.path, JSON.stringify(productos, null, 2));
-    console.log(`Producto ${title} agregado bajo el id: ${id}`);
+  async addProducts(req,res) {
+    res.setHeader("Content-Type", "application/json");
+    let {title, description, code, price, status, stock, category, thumbnails} = req.body;
+    let products = await this.getProduct();
+    let productExists = products.findIndex((product) => product.code === code) !== -1;
+    if(productExists){
+      console.log('error: El producto que intenta agregar, ya existe.');
+      return res.status(400).json({ message: `El producto que intenta agregar, ya existe.` });
+    }else{
+      let productos = await this.getProduct();
+      let id = createID();
+      id = id.slice(0,7);
+      status === "false" ? (status = true) : ``;
+      let newProduct = new Product(id, title, description, code, price, status, stock, category, thumbnails);
+      productos.push(newProduct);
+      await fs.promises.writeFile(this.path, JSON.stringify(productos, null, 2));
+      console.log(`Producto ${title} agregado bajo el id: ${id}`);
+      return res.status(400).json({ message: `Producto ${title} agregado bajo el id: ${id}` });
     }
+
+
 
   }
 
@@ -64,28 +69,34 @@ export default class ProductManager {
 
   // tengo que arreglar esta funcion
   //id, title, description, price, thumbnail, code, stock
-  async updateProduct(product) {
-    let {id, title, description, code, price, status, stock, category, thumbnails} = product;
+  async updateProduct(req,res) {
+    res.setHeader("Content-Type", "application/json");
+    let id = req.params.pid;
+    let {title, description, code, price, status, stock, category, thumbnails} = req.body;
     let productos = await this.getProduct();
-    let productIndex = productos.findIndex((product) => product.id === id);
+    let productIndex = productos.findIndex((p) => p.id === id);
     let productExists = productIndex !== -1;
     if (productExists) {
       status = true;
       productos[productIndex].title = title;
       productos[productIndex].description = description;
       productos[productIndex].price = price;
-      productos[productIndex].thumbnail = thumbnails;
+      productos[productIndex].thumbnails = thumbnails;
       productos[productIndex].stock = status;
       productos[productIndex].stock = stock;
       productos[productIndex].stock = category;
       await fs.promises.writeFile(this.path,JSON.stringify(productos, null, 2));
       console.log(`El producto ${title} con el id: ${id} se actualizo correctamente`);
+      return res.status(200).json({message: `El producto ${title} con el id: ${id} se actualizo correctamente`});
     } else {
-      console.log("Producto no encontrado.");
+      console.log( `error: El producto bajo el id:${id} no existe en la base de datos.`);
+      return res.status(404).json({error: `El producto bajo el id:${id} no existe en la base de datos.` });
     }
   }
 
-  async deleteProduct(id) {
+  async deleteProduct(req, res) {
+    res.setHeader('Content-Type','application/json');
+    let id = req.params.pid;
     let productos = await this.getProduct();
     let productIndex = productos.findIndex((product) => product.id === id);
     let productExists = productIndex !== -1;
@@ -93,10 +104,10 @@ export default class ProductManager {
       productos[productIndex] = {};
       await fs.promises.writeFile(this.path,JSON.stringify(productos, null, 2));
       console.log(`El producto con el id ${id} se borro correctamente`);
-      return(true);
+      return res.status(200).json({message:`El producto con id: ${id} fue eliminado con exito!`});
     } else {
       console.log("Producto no encontrado.");
-      return(false);
+      return res.status(400).json({error:`El producto con id: ${id} no se encontro, no existe o no se pudo eliminar`});
     }
   }
 }
