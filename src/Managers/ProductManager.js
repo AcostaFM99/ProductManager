@@ -110,13 +110,40 @@ export default class ProductManager {
       return res.status(400).json({error:`El producto con id: ${id} no se encontro, no existe o no se pudo eliminar`});
     }
   }
+
+  async addProductSocket(product){
+    let {title, description, code, price, status, stock, category, thumbnails} = product;
+    let products = await this.getProduct();
+    let productExists = products.findIndex((product) => product.code === code) !== -1;
+    if(productExists){
+      console.log('error: El producto que intenta agregar, ya existe.');
+      return `El producto que intenta agregar, ya existe.`;
+    }else{
+      let productos = await this.getProduct();
+      let id = createID();
+      id = id.slice(0,7);
+      status === "false" ? (status = true) : ``;
+      let newProduct = new Product(id, title, description, code, price, status, stock, category, thumbnails);
+      productos.push(newProduct);
+      await fs.promises.writeFile(this.path, JSON.stringify(productos, null, 2));
+      console.log(`Producto ${title} agregado bajo el id: ${id}`);
+      return `Producto ${title} agregado bajo el id: ${id}`;
+    }
+  }
+  
+  async deleteProductSocket(id){
+    let productos = await this.getProduct();
+    let productIndex = productos.findIndex((product) => product.id === id);
+    let productExists = productIndex !== -1;
+    if (productExists) {
+      productos.splice(productIndex, 1);
+      await fs.promises.writeFile(this.path,JSON.stringify(productos, null, 2));
+      console.log(`El producto con el id ${id} se borro correctamente`);
+      return `El producto con id: ${id} fue eliminado con exito!`;
+    } else {
+      console.log("Producto no encontrado.");
+      return `El producto con id: ${id} no se encontro, no existe o no se pudo eliminar`;
+    }
+  }
 }
 
-
-
-// let p = new ProductManager('../files/products.json');
-// p.getProduct().then(product => console.log(product));
-// p.addProducts("producto prueba1", "Este es un producto prueba1", 20, "Sin imagen", "code128", 25);
-// p.getProduct().then(products => console.log(products));
-// p.getProductById(1);
-//p.deleteProduct(3);

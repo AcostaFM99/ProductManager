@@ -1,6 +1,6 @@
 [
   {
-    "id": "a3247283-4782-4ee3-a7ca-4463285e1c66",
+    "id": "a3247",
     "title": "Pintura1",
     "description": "pintura de latex",
     "code": "123",
@@ -120,14 +120,13 @@
     "thumbnail": "10"
   },
   {
-    "id": "97e2a",
+    "id": "34790a4",
     "title": "Alba latex7",
-    "description": "Alba latex interior mate- formula avanzada",
-    "code": "pintu007",
-    "price": "12000",
+    "description": "pintura alba latex",
+    "code": "pint000012",
+    "price": "123333",
     "status": "true",
-    "stock": "Alba latex",
-    "thumbnail": "10"
-  },
-  {}
+    "stock": "pintura de exterior",
+    "thumbnail": "120000"
+  }
 ]
