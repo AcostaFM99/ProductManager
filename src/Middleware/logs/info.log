@@ -61,3 +61,25 @@
  Descripcion del erro Error: Failed to lookup view "home" in views directory "C:\Users\Facundo Acosta\Desktop\ProgramacionBackEnd\ProductManager\src/views"
  LOG: GET - / - Sat, 25 Feb 2023 07:54:26 GMT
  Descripcion del error: Error: Failed to lookup view "home" in views directory "C:\Users\Facundo Acosta\Desktop\ProgramacionBackEnd\ProductManager\src/views"
+ LOG: POST - /?title=pintura1&description=pintura1&code=pint0001&price=10000&status=true&stock=1000&category=pintura%20de%20latex&thumbnails=asdad12321 - Sat, 11 Mar 2023 17:22:57 GMT
+ LOG: POST - /?title=pintura1&description=pintura1&code=pint0001&price=10000&status=true&stock=1000&category=pintura%20de%20latex&thumbnails=asdad12321 - Sat, 11 Mar 2023 17:22:57 GMT- ATENCION....! Se han guardado datos en la DB
+ LOG: PUT - / - Sat, 11 Mar 2023 18:00:40 GMT
+ LOG: PUT - / - Sat, 11 Mar 2023 18:00:40 GMT
+ LOG: PUT - / - Sat, 11 Mar 2023 22:03:00 GMT
+ LOG: PUT - / - Sat, 11 Mar 2023 22:03:00 GMT
+ LOG: GET - /chat - Sat, 11 Mar 2023 22:16:42 GMT
+ Descripcion del error: Error: Failed to lookup view "chat" in views directory "C:\Users\Facundo Acosta\Desktop\ProgramacionBackEnd\ProductManager\src\app\views"
+ LOG: GET - /chat - Sat, 11 Mar 2023 22:16:51 GMT
+ Descripcion del error: Error: Failed to lookup view "chat" in views directory "C:\Users\Facundo Acosta\Desktop\ProgramacionBackEnd\ProductManager\src\app\views"
+ LOG: GET - /chat - Sat, 11 Mar 2023 22:16:52 GMT
+ Descripcion del error: Error: Failed to lookup view "chat" in views directory "C:\Users\Facundo Acosta\Desktop\ProgramacionBackEnd\ProductManager\src\app\views"
+ LOG: GET - /chat - Sat, 11 Mar 2023 22:16:52 GMT
+ Descripcion del error: Error: Failed to lookup view "chat" in views directory "C:\Users\Facundo Acosta\Desktop\ProgramacionBackEnd\ProductManager\src\app\views"
+ LOG: GET - /chat - Sat, 11 Mar 2023 22:16:52 GMT
+ Descripcion del error: Error: Failed to lookup view "chat" in views directory "C:\Users\Facundo Acosta\Desktop\ProgramacionBackEnd\ProductManager\src\app\views"
+ LOG: GET - /chat - Sat, 11 Mar 2023 22:16:52 GMT
+ Descripcion del error: Error: Failed to lookup view "chat" in views directory "C:\Users\Facundo Acosta\Desktop\ProgramacionBackEnd\ProductManager\src\app\views"
+ LOG: GET - /chat - Sat, 11 Mar 2023 22:16:52 GMT
+ Descripcion del error: Error: Failed to lookup view "chat" in views directory "C:\Users\Facundo Acosta\Desktop\ProgramacionBackEnd\ProductManager\src\app\views"
+ LOG: GET - /chat - Sat, 11 Mar 2023 22:16:52 GMT
+ Descripcion del error: Error: Failed to lookup view "chat" in views directory "C:\Users\Facundo Acosta\Desktop\ProgramacionBackEnd\ProductManager\src\app\views"

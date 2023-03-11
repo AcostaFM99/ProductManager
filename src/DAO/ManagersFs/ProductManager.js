@@ -33,42 +33,41 @@ export default class ProductManager {
   async addProducts(req,res) {
     res.setHeader("Content-Type", "application/json");
     let {title, description, code, price, status, stock, category, thumbnails} = req.body;
-    let products = await this.getProduct();
-    let productExists = products.findIndex((product) => product.code === code) !== -1;
-    if(productExists){
-      console.log('error: El producto que intenta agregar, ya existe.');
-      return res.status(400).json({ message: `El producto que intenta agregar, ya existe.` });
+    let camposVacios = !title || !description || !code || !price || !status || !stock || !category || !thumbnails;
+    if(camposVacios){
+        res.status(400).json({ error: "faltan campos por completar." });
     }else{
-      let productos = await this.getProduct();
-      let id = createID();
-      id = id.slice(0,7);
-      status === "false" ? (status = true) : ``;
-      let newProduct = new Product(id, title, description, code, price, status, stock, category, thumbnails);
-      productos.push(newProduct);
-      await fs.promises.writeFile(this.path, JSON.stringify(productos, null, 2));
-      console.log(`Producto ${title} agregado bajo el id: ${id}`);
-      return res.status(400).json({ message: `Producto ${title} agregado bajo el id: ${id}` });
+      let products = await this.getProduct();
+      let productExists = products.findIndex((product) => product.code === code) !== -1;
+      if(productExists){
+        console.log('error: El producto que intenta agregar, ya existe.');
+        return res.status(400).json({ message: `El producto que intenta agregar, ya existe.` });
+      }else{
+        let productos = await this.getProduct();
+        let id = createID();
+        id = id.slice(0,7);
+        status === "false" ? (status = true) : ``;
+        let newProduct = new Product(id, title, description, code, price, status, stock, category, thumbnails);
+        productos.push(newProduct);
+        await fs.promises.writeFile(this.path, JSON.stringify(productos, null, 2));
+        console.log(`Producto ${title} agregado bajo el id: ${id}`);
+        return res.status(400).json({ message: `Producto ${title} agregado bajo el id: ${id}` });
+      }
     }
-
-
-
   }
 
-  async getProductById(id) {
+  async getProductById(req,res) {
+    let id = req.params.pid;
     let products = await this.getProduct();
     let productId = products.find((product) => product.id === id) ;
     let productIdIndex = productId != -1;
     if (productIdIndex) {
-      console.log(productId);
-      return(productId);
+      return res.status(200).json({ message:`Este es el producto bajo el id: ${id}`,productId });
     } else {
-      console.log(`No hay producto con el ID: ${id}`);
+      return res.status(400).json({error:`No hay producto con el ID: ${id}`});
     }
   }
 
-
-  // tengo que arreglar esta funcion
-  //id, title, description, price, thumbnail, code, stock
   async updateProduct(req,res) {
     res.setHeader("Content-Type", "application/json");
     let id = req.params.pid;
