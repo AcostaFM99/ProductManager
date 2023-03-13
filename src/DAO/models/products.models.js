@@ -4,13 +4,18 @@ import {Schema, model} from "mongoose";
 
     const productsSchema=new Schema({
         id: String,
-        title: String,
+        title:{
+            type:String,
+            unique:[true, `ya existe un producto con ese nombre`],
+            require:true
+        },
         description: {
             type:String,
-            unique:[true, `Ya existe un producto con ese nombre en la base de datos.`]
+            require:true
         },
         code: {
             type: String,
+            require:true,
             unique:[true, `El codigo ya existe en la DB.`]
         },
         price: Number,

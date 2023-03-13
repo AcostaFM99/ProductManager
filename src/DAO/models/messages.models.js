@@ -10,7 +10,10 @@ const messagesSchema =new Schema({
         required:true,
         unique:[true, 'El email ya esta registrado en la base de datos']
     },
-    message: String
+    message: {
+        type: String,
+        require:true
+    }
 });
 
 

@@ -83,3 +83,5 @@
  Descripcion del error: Error: Failed to lookup view "chat" in views directory "C:\Users\Facundo Acosta\Desktop\ProgramacionBackEnd\ProductManager\src\app\views"
  LOG: GET - /chat - Sat, 11 Mar 2023 22:16:52 GMT
  Descripcion del error: Error: Failed to lookup view "chat" in views directory "C:\Users\Facundo Acosta\Desktop\ProgramacionBackEnd\ProductManager\src\app\views"
+ LOG: POST - /640cd813dc9c16c08dd15d01 - Mon, 13 Mar 2023 17:32:41 GMT
+ LOG: POST - /640cd813dc9c16c08dd15d01 - Mon, 13 Mar 2023 17:32:41 GMT

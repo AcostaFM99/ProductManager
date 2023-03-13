@@ -1,17 +1,25 @@
 import {Schema, model} from "mongoose";
 
-    const carritoCollections ="carrito";
+    const carritoCollections ="carritos";
 
-    const carritoSchema =new Schema({
-        id: String,
-        prodruct:[
-            {
-                prodruct: String,
-                quantity: Number
-            }
-        ]
-
-    });
+    const carritoItemSchema =new Schema({
     
+        productId: {
+            type: String,
+            required: false,
+            unique: false,
+          },
+          quantity: {
+            type: Number,
+            default: 1,
+          },
+        
+    });
+
+    const carritoSchema = new Schema({
+        products:[carritoItemSchema]
+    })
+    
+
 
     export const carritoModelo= model(carritoCollections,carritoSchema);

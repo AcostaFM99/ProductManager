@@ -1,13 +1,15 @@
 import { Router } from "express";
-import { carritoModelo } from "../DAO/models/carritos.models.js";
+import CarritoManagerMg from "../DAO/ManagersMg/CarritoManaferMg.js";
 
 const router = Router();
 
-router.get("/", async(req, res)=>{
-    
+const cm = new CarritoManagerMg;
 
-})
 
+router.get("/", async(req, res)=>{await cm.getCarrito(req,res)});
+router.post("/", async(req, res)=>{await cm.CreateCarrito(req,res)});
+router.get("/:cid",async(req, res)=>{await cm.CarritoById(req,res)});
+router.post("/:cid/product/:pid",async(req,res)=>{await cm.AddproductCarrito(req,res)});
 
 
 export default router;

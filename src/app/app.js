@@ -11,6 +11,7 @@ import path from 'path';
 import { Server } from "socket.io";
 import ProductManager from "../DAO/ManagersFs/ProductManager.js";
 import mongoose from 'mongoose';
+import { messagesModelo } from "../DAO/models/messages.models.js";
 
 
 
@@ -60,6 +61,13 @@ const serverSockets = new Server(serverHttp);
 serverSockets.on('connection',async (socket)=>{
   console.log(`Se han conectado socket id: ${socket.id}`);
 
+    //************** Chat ********************
+      socket.on('mensaje',async(mensaje)=>{
+        await messagesModelo.create({user:mensaje.emisor, message:mensaje.mensaje})
+        serverSockets.emit('nuevoMensaje',mensaje);
+      })  
+
+    //********Manager Products FileSystyem********
     let products = await pm.getProduct();
     socket.emit('products', products);
 
@@ -79,7 +87,7 @@ serverSockets.on('connection',async (socket)=>{
 
 const conectar= async()=>{
   try {
-    await mongoose.connect('mongodb://127.0.0.1:27017/ecommerce');
+    await mongoose.connect('mongodb+srv://coderhouse:coderhouse@cluster0.npycwhz.mongodb.net/?retryWrites=true&w=majority&dbName=ecommerce');
     console.log('Conexion a DB establecida');
   } catch (error) {
     console.log(`Error de conexion al servidor BD: ${error}`);

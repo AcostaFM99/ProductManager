@@ -1,5 +1,4 @@
 import { v4 as createID } from "uuid";
-import fs from "fs";
 import {productsModelo} from "../models/products.models.js"
 
 
@@ -18,7 +17,7 @@ export default class ProductManagerMg{
         res.setHeader("Content-Type", "application/json");
         res.status(200).json({ 
             product
-         });
+        });
          
 
     };
