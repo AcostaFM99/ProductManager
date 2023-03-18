@@ -12,6 +12,7 @@ import { Server } from "socket.io";
 import ProductManager from "../DAO/ManagersFs/ProductManager.js";
 import mongoose from 'mongoose';
 import { messagesModelo } from "../DAO/models/messages.models.js";
+import { carritoModelo } from "../DAO/models/carritos.models.js";
 
 
 
@@ -25,7 +26,12 @@ const app = express();
 const pm = new ProductManager(rutaFilesProdc);
 
 
-app.engine('handlebars', engine());
+app.engine('handlebars', engine({
+  runtimeOptions:{
+    allowProtoPropertiesByDefault: true,
+    allowProtoMethodsByDefault: true
+  },
+}));
 app.set('view engine', 'handlebars');
 app.set('views', rutaviews);
 
@@ -63,7 +69,7 @@ serverSockets.on('connection',async (socket)=>{
 
     //************** Chat ********************
       socket.on('mensaje',async(mensaje)=>{
-        await messagesModelo.create({user:mensaje.emisor, message:mensaje.mensaje})
+        await messagesModelo.create({user:mensaje.emisor, message:mensaje.mensaje});
         serverSockets.emit('nuevoMensaje',mensaje);
       })  
 
@@ -89,6 +95,23 @@ const conectar= async()=>{
   try {
     await mongoose.connect('mongodb+srv://coderhouse:coderhouse@cluster0.npycwhz.mongodb.net/?retryWrites=true&w=majority&dbName=ecommerce');
     console.log('Conexion a DB establecida');
+
+    // let resultado = await carritoModelo.create({
+    //     productos:[{
+    //       producto:{
+
+    //         product:'640f5e478ecf95156b44d187'
+    //       }
+    //   }]
+    // })
+
+    // console.log(resultado)
+    // let carritoByid = await carritoModelo.findById('64150c6246cb9dbf88f685af');
+
+    // let prueba = carritoByid.productos
+  
+    // console.log(prueba)
+
   } catch (error) {
     console.log(`Error de conexion al servidor BD: ${error}`);
     

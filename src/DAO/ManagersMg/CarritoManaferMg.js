@@ -44,14 +44,16 @@ export default class CarritoManagerMg{
         res.setHeader("Content-Type", "application/json");
         let carritoByid = await carritoModelo.findById(req.params.cid);
         if(carritoByid){
-            let productExist = carritoByid.products.findIndex((item)=> item.productId === req.params.pid);
-            if(productExist !== -1){
-                await carritoModelo.updateOne({ _id: req.params.cid,"products.productId":req.params.pid}, {$inc:{ "products.$.quantity": 1}});
+            let productExist = carritoByid.productos.some(producto => producto.producto.some(p => p.product === req.params.pid));
+            console.log(productExist)
+            if(productExist){
+                await carritoModelo.updateOne({ _id: req.params.cid,"producto.$.product":req.params.pid},{$inc:{ "productos.$.quantity": 1}});
             }else{
-                await carritoModelo.updateOne({ _id: req.params.cid },{$push:{products:{productId: req.params.pid}}});
+                    let respuesta =await carritoModelo.updateOne({ _id: req.params.cid },{$push:{"producto.$.product":{product:req.params.pid}}});
+
             }
 
-            res.status(200).json({
+            res.status(201).json({
                 Menssage:`se agrego el producto bajo el id: ${req.params.pid} en el carrito id: ${req.params.cid}`
             })
         }else{
@@ -60,6 +62,34 @@ export default class CarritoManagerMg{
 
 
 
-    }   
+    }  
+    // Carrito anterior
+    // async AddproductCarrito(req,res){
+    //     res.setHeader("Content-Type", "application/json");
+    //     let carritoByid = await carritoModelo.findById(req.params.cid);
+    //     if(carritoByid){
+    //         let productExist = carritoByid.products.findIndex((item)=> item.productId === req.params.pid);
+    //         if(productExist !== -1){
+    //             await carritoModelo.updateOne({ _id: req.params.cid,"products.productId":req.params.pid}, {$inc:{ "products.$.quantity": 1}});
+    //         }else{
+    //             await carritoModelo.updateOne({ _id: req.params.cid },{$push:{products:{productId: req.params.pid}}});
+    //         }
 
+    //         res.status(200).json({
+    //             Menssage:`se agrego el producto bajo el id: ${req.params.pid} en el carrito id: ${req.params.cid}`
+    //         })
+    //     }else{
+    //         res.status(400).json({error:`Carrito no encontrado.`});
+    //     }
+
+
+
+    // } 
+    
+
+
+
+
+
+    
 }

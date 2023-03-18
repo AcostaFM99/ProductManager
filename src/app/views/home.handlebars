@@ -1,10 +1,26 @@
 <h1>Home Products</h1>
+
+
 <hr>
+
+
 <ul>
     {{#each productos}}
     <li>
-        {{this.title}}
+        {{this}} 
     </li>
         
     {{/each}}
 </ul>
+
+
+<a href="/api/products?page=1">Primer pagina</a>
+{{#if hasPrevPage}}
+<a href="/api/products?page={{prevPage}}">pag.Anterior</a>
+{{/if}}
+{{#if hasNextPage}}
+<a href="/api/products?page={{nextPage}}">pag.siguiente</a>
+{{/if}}
+<a href="/api/products?page={{totalPages}}">Ultima pagina</a>
+
+
