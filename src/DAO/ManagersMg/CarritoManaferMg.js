@@ -41,24 +41,47 @@ export default class CarritoManagerMg{
     }
 
     async AddproductCarrito(req,res){
-        res.setHeader("Content-Type", "application/json");
-        let carritoByid = await carritoModelo.findById(req.params.cid);
-        if(carritoByid){
-            let productExist = carritoByid.productos.some(producto => producto.producto.some(p => p.product === req.params.pid));
-            console.log(productExist)
-            if(productExist){
-                await carritoModelo.updateOne({ _id: req.params.cid,"producto.$.product":req.params.pid},{$inc:{ "productos.$.quantity": 1}});
-            }else{
-                    let respuesta =await carritoModelo.updateOne({ _id: req.params.cid },{$push:{"producto.$.product":{product:req.params.pid}}});
-
-            }
-
-            res.status(201).json({
-                Menssage:`se agrego el producto bajo el id: ${req.params.pid} en el carrito id: ${req.params.cid}`
-            })
+        
+        let carritoByid = await carritoModelo.findOne({_id:req.params.cid});
+        let carritoIndex= carritoByid.producto.findIndex(p=>p.product==req.params.pid);
+        console.log(carritoIndex)
+        if(carritoIndex == -1){
+            carritoByid.producto.push({product:req.params.pid,quantity:1});
+            await carritoModelo.updateOne({ _id: req.params.cid },carritoByid);
+            res.setHeader("Content-Type", "application/json");
+            res.status(200).json({ Message: `Producto agregado al carrito`});
         }else{
-            res.status(400).json({error:`Carrito no encontrado.`});
+            carritoByid.producto[carritoIndex].quantity ++
+            await carritoModelo.updateOne({ _id: req.params.cid },carritoByid);
+            res.setHeader("Content-Type", "application/json");
+            res.status(200).json({ Message: `Producto agregado al carrito`});
         }
+
+
+
+        
+
+
+
+
+
+
+
+        // if(carritoByid){
+        //     let productExist = carritoByid.productos.some(producto => producto.producto.some(p => p.product === req.params.pid));
+        //     console.log(productExist)
+        //     if(productExist){
+        //         await carritoModelo.updateOne({ _id: req.params.cid,"producto.$.product":req.params.pid},{$inc:{ "productos.$.quantity": 1}});
+        //     }else{
+        //             let respuesta =await carritoModelo.updateOne({ _id: req.params.cid },carritoByid);
+
+        //     }
+        //     res.status(201).json({
+        //         Menssage:`se agrego el producto bajo el id: ${req.params.pid} en el carrito id: ${req.params.cid}`
+        //     })
+        // }else{
+        //     res.status(400).json({error:`Carrito no encontrado.`});
+        // }
 
 
 

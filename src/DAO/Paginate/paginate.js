@@ -27,7 +27,7 @@ export default class paginate{
                 res.render('home',{
                     productos:productos.docs,
                     totalPages, hasPrevPage,hasNextPage,prevPage,nextPage
-                    
+                        
                 });
             }else{
                 //falta la parte del query
