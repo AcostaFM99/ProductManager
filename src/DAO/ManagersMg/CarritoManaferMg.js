@@ -34,7 +34,7 @@ export default class CarritoManagerMg{
             res.setHeader("Content-Type", "application/json");
             res.status(404).json({Message: `No se encontro el carrito bajo el id: ${id}.`})
         }   
-        res.render('cart.handlebars',carrito )
+        res.render('cart.handlebars',{carrito})
     }
 
     async AddproductCarrito(req,res){
