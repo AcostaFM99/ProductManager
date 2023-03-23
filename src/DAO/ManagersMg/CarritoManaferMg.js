@@ -1,4 +1,5 @@
 
+import mongoose from 'mongoose';
 import { carritoModelo } from '../models/carritos.models.js';
 import { productsModelo } from '../models/products.models.js';
 
@@ -44,7 +45,6 @@ export default class CarritoManagerMg{
         
         let carritoByid = await carritoModelo.findOne({_id:req.params.cid});
         let carritoIndex= carritoByid.producto.findIndex(p=>p.product==req.params.pid);
-        console.log(carritoIndex)
         if(carritoIndex == -1){
             carritoByid.producto.push({product:req.params.pid,quantity:1});
             await carritoModelo.updateOne({ _id: req.params.cid },carritoByid);
@@ -58,61 +58,66 @@ export default class CarritoManagerMg{
         }
 
 
-
-        
-
-
-
-
-
-
-
-        // if(carritoByid){
-        //     let productExist = carritoByid.productos.some(producto => producto.producto.some(p => p.product === req.params.pid));
-        //     console.log(productExist)
-        //     if(productExist){
-        //         await carritoModelo.updateOne({ _id: req.params.cid,"producto.$.product":req.params.pid},{$inc:{ "productos.$.quantity": 1}});
-        //     }else{
-        //             let respuesta =await carritoModelo.updateOne({ _id: req.params.cid },carritoByid);
-
-        //     }
-        //     res.status(201).json({
-        //         Menssage:`se agrego el producto bajo el id: ${req.params.pid} en el carrito id: ${req.params.cid}`
-        //     })
-        // }else{
-        //     res.status(400).json({error:`Carrito no encontrado.`});
-        // }
-
-
-
     }  
-    // Carrito anterior
-    // async AddproductCarrito(req,res){
-    //     res.setHeader("Content-Type", "application/json");
-    //     let carritoByid = await carritoModelo.findById(req.params.cid);
-    //     if(carritoByid){
-    //         let productExist = carritoByid.products.findIndex((item)=> item.productId === req.params.pid);
-    //         if(productExist !== -1){
-    //             await carritoModelo.updateOne({ _id: req.params.cid,"products.productId":req.params.pid}, {$inc:{ "products.$.quantity": 1}});
-    //         }else{
-    //             await carritoModelo.updateOne({ _id: req.params.cid },{$push:{products:{productId: req.params.pid}}});
-    //         }
+ 
+    async DeleteProductById(req,res){
+        let carritoByid = await carritoModelo.findOne({_id:req.params.cid});
+        let carritoIndex= carritoByid.producto.findIndex(p=>p.product==req.params.pid);
+        if(carritoIndex == -1){
+            res.setHeader("Contente-Type","aplicatiom/json");
+            res.status(401).json({
+                error:`Producto no encontrado en el carrito ${req.params.cid}`
+            });
+        }else{
+            carritoByid.producto[carritoIndex]={}
+            await carritoModelo.updateOne({ _id: req.params.cid },carritoByid);
+            res.setHeader("Contente-Type","aplicatiom/json");
+            res.status(200).json({
+                error:`Producto eliminado del carrito: ${req.params.cid}`
+            });
+        }
 
-    //         res.status(200).json({
-    //             Menssage:`se agrego el producto bajo el id: ${req.params.pid} en el carrito id: ${req.params.cid}`
-    //         })
-    //     }else{
-    //         res.status(400).json({error:`Carrito no encontrado.`});
-    //     }
+    }
 
+    async ActualizarCantidad(req,res){
+        let cantidad = req.body;
+        let carritoByid = await carritoModelo.findOne({_id:req.params.cid});
+        let carritoIndex= carritoByid.producto.findIndex(p=>p.product==req.params.pid);
 
+        if(carritoIndex){
+            res.setHeader("Contente-Type","aplicatiom/json");
+            res.status(401).json({
+                error:`Producto no encontrado en el carrito ${req.params.cid}`
+            });
+        }else{
+            carritoByid.producto[carritoIndex].quantity=cantidad;
+            await carritoModelo.updateOne({ _id: req.params.cid },carritoByid);
+            res.setHeader("Contente-Type","aplicatiom/json");
+            res.status(200).json({
+                error:`Cantidad actualizada`
+            });
+        }
+        
+    }
 
-    // } 
-    
+    async DeleteAllProducts(req, res){
+        let carritoByid = await carritoModelo.findOne({_id:req.params.cid});
 
-
-
-
+        if(carritoByid){
+            carritoByid.producto={};
+            await carritoModelo.updateOne({ _id: req.params.cid },carritoByid);
+            res.setHeader("Contente-Type","aplicatiom/json");
+            res.status(200).json({
+                error:`Se eliminaron los productos del carrito ${req.params.cid}`
+            });
+            
+        }else{
+            res.setHeader("Contente-Type","aplicatiom/json");
+            res.status(401).json({
+                error:`No se encontro el carrito: ${req.params.cid}`
+            });
+        }
+    }
 
     
 }

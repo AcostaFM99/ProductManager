@@ -12,12 +12,16 @@ import {Schema, model} from "mongoose";
                   },
                   quantity:{
                     type: Number,
-                    default: 0,
                   },
                 }
               ]
             }
     });
-
+    carritoSchema.pre('find',function(){
+      this.populate('producto.product');
+    })
+    carritoSchema.pre('findOne',function(){
+      this.populate('producto.product');
+    })
 
     export const carritoModelo= model(carritoCollections,carritoSchema);
