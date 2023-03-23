@@ -95,23 +95,6 @@ const conectar= async()=>{
   try {
     await mongoose.connect('mongodb+srv://coderhouse:coderhouse@cluster0.npycwhz.mongodb.net/?retryWrites=true&w=majority&dbName=ecommerce');
     console.log('Conexion a DB establecida');
-
-    // let resultado = await carritoModelo.create({
-    //     productos:[{
-    //       producto:{
-
-    //         product:'640f5e478ecf95156b44d187'
-    //       }
-    //   }]
-    // })
-
-    // console.log(resultado)
-    // let carritoByid = await carritoModelo.findById('64150c6246cb9dbf88f685af');
-
-    // let prueba = carritoByid.productos
-  
-    // console.log(prueba)
-
   } catch (error) {
     console.log(`Error de conexion al servidor BD: ${error}`);
     

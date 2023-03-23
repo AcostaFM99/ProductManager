@@ -28,17 +28,13 @@ export default class CarritoManagerMg{
 
     async CarritoById(req,res){
         let carrito
-        let id = req.params.cid
         try {
-         carrito = await carritoModelo.find({_id:id});
+         carrito = await carritoModelo.find({_id:req.params.cid});
         } catch (err) {
             res.setHeader("Content-Type", "application/json");
             res.status(404).json({Message: `No se encontro el carrito bajo el id: ${id}.`})
         }   
-        res.setHeader("Content-Type", "application/json");
-        res.status(200).json({ Message: `Este es el carrito bajo el id: ${id}`,
-            carrito
-        })
+        res.render('cart.handlebars',carrito )
     }
 
     async AddproductCarrito(req,res){
