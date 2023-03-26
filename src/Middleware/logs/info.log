@@ -85,3 +85,57 @@
  Descripcion del error: Error: Failed to lookup view "chat" in views directory "C:\Users\Facundo Acosta\Desktop\ProgramacionBackEnd\ProductManager\src\app\views"
  LOG: POST - /640cd813dc9c16c08dd15d01 - Mon, 13 Mar 2023 17:32:41 GMT
  LOG: POST - /640cd813dc9c16c08dd15d01 - Mon, 13 Mar 2023 17:32:41 GMT
+ LOG: GET - /api/products - Sun, 26 Mar 2023 03:38:26 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /products - Sun, 26 Mar 2023 03:38:42 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /products - Sun, 26 Mar 2023 03:38:48 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /api/products - Sun, 26 Mar 2023 03:40:08 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /api/products - Sun, 26 Mar 2023 03:42:26 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /api/products - Sun, 26 Mar 2023 03:42:36 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /api/products - Sun, 26 Mar 2023 03:43:03 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /products - Sun, 26 Mar 2023 03:43:13 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /products - Sun, 26 Mar 2023 03:43:28 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /api/products - Sun, 26 Mar 2023 03:47:12 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /api/products - Sun, 26 Mar 2023 03:50:42 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /api/products - Sun, 26 Mar 2023 03:50:44 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /api/products - Sun, 26 Mar 2023 03:51:28 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /api/products - Sun, 26 Mar 2023 03:53:45 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /api/products - Sun, 26 Mar 2023 03:54:16 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /api/products - Sun, 26 Mar 2023 03:55:06 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /api/products - Sun, 26 Mar 2023 03:55:43 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /api/products - Sun, 26 Mar 2023 03:55:55 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /api/products - Sun, 26 Mar 2023 03:56:05 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /api/products - Sun, 26 Mar 2023 03:56:10 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /products - Sun, 26 Mar 2023 03:56:48 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /products - Sun, 26 Mar 2023 03:56:49 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /products - Sun, 26 Mar 2023 03:56:59 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /api/products - Sun, 26 Mar 2023 04:04:53 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /api/products - Sun, 26 Mar 2023 04:06:52 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /api/products - Sun, 26 Mar 2023 04:07:40 GMT
+ Descripcion del error: TypeError: res.redirec is not a function
+ LOG: GET - /api/products - Sun, 26 Mar 2023 04:10:05 GMT
+ Descripcion del error: TypeError: res.redirec is not a function

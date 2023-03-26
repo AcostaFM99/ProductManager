@@ -50,23 +50,18 @@ app.use(session({
       ttl:15
     })
 }))
-//**************Sesiones******************
-app.use('/api/sessions',sessionRouter);
+
 //****************rutas de views**********
 app.use('/',viewsRouter);
+//**************registro*********************
+app.use('/api/sessions',sessionRouter);
 ///*************** monngose***************
-app.use('/api/products',Middleware.auth,productsMg);
-app.use('/api/carts',Middleware.auth,carritoMg);
+app.use('/api/products',productsMg);
+app.use('/api/carts',carritoMg);
 //*************** filesSystem*************
-app.use('/api/products',productRouter,Middleware.midd1);
+app.use('/api/products',productRouter);
 app.use('/api/carts',carritoRouter);
 
-
-
-
-
-
-app.use(Middleware.middErrores);
 
 
 const serverHttp = app.listen(PORT, () => {

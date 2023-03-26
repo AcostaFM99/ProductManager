@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
 
 
 router.get("/:pid", async (req, res) => {await pm.getProductById(req,res)});
-router.post("/",upload.single('thumbnails'),Middleware.midd1,Middleware.midd2, async (req, res)=>{await pm.addProducts(req,res);});
+router.post("/",upload.single('thumbnails'), async (req, res)=>{await pm.addProducts(req,res);});
 router.put('/:pid',async (req,res)=>{await pm.updateProduct(req, res);});
 router.delete('/:pid',async (req,res)=>{ await pm.deleteProduct(req,res);});
   

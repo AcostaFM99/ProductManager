@@ -10,7 +10,8 @@ const usuariosSchema = new Schema({
         unique:true
     },
     contraseña:String,
-    edad:Number
+    edad:Number,
+    rol:String
 
 });
 
