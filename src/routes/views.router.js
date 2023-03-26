@@ -16,6 +16,15 @@ router.get('/chat', async(req,res)=>{
     let style='chat.css'
     res.render('chat',{style});
 })
+router.get('/registro', async(req,res)=>{
+    res.setHeader('Content-Type', 'text/html');
+    res.render('registro');
+})
+router.get('/login', async(req,res)=>{
+    res.setHeader('Content-Type', 'text/html');
+    res.render('login');
+})
+
 
 export default router;
 

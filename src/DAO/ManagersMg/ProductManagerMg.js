@@ -7,17 +7,126 @@ export default class ProductManagerMg{
 
 
     async getProducts(req,res){
-        let product;
+
+        let { category, status, limit, page, sort } = req.query;
+        let query = {};
+        let options = {limit: 10, page: 1};
+        let params = [];
+        let response = {};
+        if(category){
+            (query.category = category);
+            params.push(`category=${category}`);
+        };
+        if(status){
+            (query.status = status)
+            params.push(`status=${status}`);
+        };
+        if(limit){
+            (options.limit = limit)
+            params.push(`limit=${limit}`);
+        };
+
+        if(page){
+            (options.page = page);
+        };
+
+        if(sort){
+            (options.sort = { price: sort })
+            params.push(`sort=${sort}`);
+        };
         try {
-            product = await productsModelo.find();
-        } catch (error) {
-            res.setHeader("Content-Type", "application/json");
-            res.status(500).json({ Message: `No se pudo traer los productos de la base de datos` });
+            let productos = await productsModelo.find(query, options);
+            let { docs, totalPages, prevPage, nextPage, page, hasPrevPage, hasNextPage } = productos;
+            response.status = "success";
+            response.payload = docs;
+            response.totalPages = totalPages;
+            response.prevPage = prevPage;
+            response.nextPage = nextPage;
+            response.page = page;
+            response.hasPrevPage = hasPrevPage;
+            response.hasNextPage = hasNextPage;
+            console.log(response);
+            res.render('home',{
+                productos,
+                totalPages, hasPrevPage,hasNextPage,prevPage,nextPage
+
+            })
+        }catch(error) {
+            response.status = "error";
         }
-        res.setHeader("Content-Type", "application/json");
-        res.status(200).json({ 
-            product
-        });
+
+
+
+
+
+
+
+
+
+
+
+        // let limit = req.query.limit;
+        // limit?  limit = req.query.limit : limit = 10;
+        // let page = req.query.page;
+        // let query = req.query.query;
+        // let sort = parseInt(req.query.sort);
+        // await productsModelo.paginate();
+        
+
+
+        // if(query){
+        //     if(sort){
+        //         //Falta la parte del query
+        //         let productos = await productsModelo.paginate({},{page:page,limit:limit,sort:{price:sort}});
+        //         let {totalPages, hasPrevPage,hasNextPage,prevPage,nextPage}=productos;
+        //         res.render('home',{
+        //             productos:productos.docs,
+        //             totalPages, hasPrevPage,hasNextPage,prevPage,nextPage
+                        
+        //         });
+        //     }else{
+        //         //falta la parte del query
+        //         let productos = await productsModelo.paginate({},{page:page,limit:limit});
+        //         let {totalPages, hasPrevPage,hasNextPage,prevPage,nextPage}=productos;
+        //         res.render('home',{
+        //             productos:productos.docs,
+        //             totalPages, hasPrevPage,hasNextPage,prevPage,nextPage
+        //         });
+        //     } 
+        // }else{
+        //     if(sort){
+        //         let productos = await productsModelo.paginate({},{page:page,limit:limit,sort:{price:sort}});
+        //         let {totalPages, hasPrevPage,hasNextPage,prevPage,nextPage}=productos;
+        //         res.render('home',{
+        //             productos:productos.docs,
+        //             totalPages, hasPrevPage,hasNextPage,prevPage,nextPage
+        //         });
+        //     }else{
+        //         let productos = await productsModelo.paginate({},{limit:limit,page:page});
+        //         let {totalPages, hasPrevPage,hasNextPage,prevPage,nextPage}=productos;
+        //         res.render('home',{
+        //             productos:productos.docs,
+        //             totalPages, hasPrevPage,hasNextPage,prevPage,nextPage
+        //         });
+        //     }
+            
+        // }
+
+
+
+//8888888888888888888888888
+
+        // let product;
+        // try {
+        //     product = await productsModelo.find();
+        // } catch (error) {
+        //     res.setHeader("Content-Type", "application/json");
+        //     res.status(500).json({ Message: `No se pudo traer los productos de la base de datos` });
+        // }
+        // res.setHeader("Content-Type", "application/json");
+        // res.status(200).json({ 
+        //     product
+        // });
          
 
     };

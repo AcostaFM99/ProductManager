@@ -14,8 +14,7 @@ export default class paginate{
         let page = req.query.page;
         let query = req.query.query;
         let sort = parseInt(req.query.sort);
-        let productos = await productsModelo.paginate();
-        console.log(productos)
+        await productsModelo.paginate();
         
 
 

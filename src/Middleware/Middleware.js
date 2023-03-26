@@ -36,6 +36,11 @@ const Middleware= {
         };
 
 
+    },
+    auth:(req,res,next)=>{
+        //esto es para que no se pueda acceder al endpoint sin antes estar logueado
+        if(!req.session.usuario) res.sendStatus(401);
+        next();
     }
 
 }

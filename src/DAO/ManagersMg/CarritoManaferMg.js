@@ -1,11 +1,11 @@
 
 import mongoose from 'mongoose';
 import { carritoModelo } from '../models/carritos.models.js';
-import { productsModelo } from '../models/products.models.js';
 
 export default class CarritoManagerMg{
 
     async getCarrito(req, res){
+
         let carrito
         try {
             carrito = await carritoModelo.find();

@@ -12,9 +12,9 @@ import { Server } from "socket.io";
 import ProductManager from "../DAO/ManagersFs/ProductManager.js";
 import mongoose from 'mongoose';
 import { messagesModelo } from "../DAO/models/messages.models.js";
-import { carritoModelo } from "../DAO/models/carritos.models.js";
-
-
+import session from "express-session";
+import mongoStore from 'connect-mongo'
+import sessionRouter from "../routes/sessions.router.js";
 
 const rutaviews= path.join(__dirname + '/app/views');
 const rutapublic= path.join(__dirname + '/public');
@@ -25,7 +25,7 @@ const app = express();
 
 const pm = new ProductManager(rutaFilesProdc);
 
-
+//configuracion de handlebars
 app.engine('handlebars', engine({
   runtimeOptions:{
     allowProtoPropertiesByDefault: true,
@@ -34,18 +34,29 @@ app.engine('handlebars', engine({
 }));
 app.set('view engine', 'handlebars');
 app.set('views', rutaviews);
-
+//configuracion de la carpeta publica
 app.use(express.static(rutapublic));
 
+// ????????????
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
+app.use(session({
+    secret:'miPalabraSecreta',
+    resave: true,
+    saveUninitialized:true,
+    store:mongoStore.create({
+      mongoUrl:'mongodb+srv://coderhouse:coderhouse@cluster0.npycwhz.mongodb.net/?retryWrites=true&w=majority&dbName=ecommerce',
+      ttl:15
+    })
+}))
+//**************Sesiones******************
+app.use('/api/sessions',sessionRouter);
 //****************rutas de views**********
 app.use('/',viewsRouter);
 ///*************** monngose***************
-app.use('/api/products',productsMg,Middleware.midd1);
-app.use('/api/carts',carritoMg);
+app.use('/api/products',Middleware.auth,productsMg);
+app.use('/api/carts',Middleware.auth,carritoMg);
 //*************** filesSystem*************
 app.use('/api/products',productRouter,Middleware.midd1);
 app.use('/api/carts',carritoRouter);
