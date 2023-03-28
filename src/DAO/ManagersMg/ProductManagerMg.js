@@ -8,95 +8,75 @@ export default class ProductManagerMg{
 
     async getProducts(req){
 
-        // let { category, status, limit, page, sort } = req.query;
-        // let query = {};
-        // let options = {limit: 10, page: 1};
-        // let params = [];
-        // let response = {};
-        // if(category){
-        //     (query.category = category);
-        //     params.push(`category=${category}`);
-        // };
-        // if(status){
-        //     (query.status = status)
-        //     params.push(`status=${status}`);
-        // };
-        // if(limit){
-        //     (options.limit = limit)
-        //     params.push(`limit=${limit}`);
-        // };
+        let { category, status, limit, page, sort } = req.query;
+        let query = {};
+        let options = {limit: 10, page: 1};
+        let params = [];
+        let response = {};
+        if(category){
+            (query.category = category);
+            params.push(`category=${category}`);
+        };
+        if(status){
+            (query.status = status)
+            params.push(`status=${status}`);
+        };
+        if(limit){
+            (options.limit = limit)
+            params.push(`limit=${limit}`);
+        };
 
-        // if(page){
-        //     (options.page = page);
-        // };
+        if(page){
+            (options.page = page);
+        };
 
-        // if(sort){
-        //     (options.sort = { price: sort })
-        //     params.push(`sort=${sort}`);
-        // };
-        // try {
-        //     let productos = await productsModelo.find(query, options);
-        //     let { docs, totalPages, prevPage, nextPage, page, hasPrevPage, hasNextPage } = productos;
-        //     response.status = "success";
-        //     response.payload = docs;
-        //     response.totalPages = totalPages;
-        //     response.prevPage = prevPage;
-        //     response.nextPage = nextPage;
-        //     response.page = page;
-        //     response.hasPrevPage = hasPrevPage;
-        //     response.hasNextPage = hasNextPage;
+        if(sort){
+            (options.sort = { price: sort })
+            params.push(`sort=${sort}`);
+        };
+        try {
+            let productos = await productsModelo.paginate(query, options);
+            let { docs, totalPages, prevPage, nextPage, page, hasPrevPage, hasNextPage } = productos;
+            response.status = "success";
+            response.payload = docs;
+            response.totalPages = totalPages;
+            response.prevPage = prevPage;
+            response.nextPage = nextPage;
+            response.page = page;
+            response.hasPrevPage = hasPrevPage;
+            response.hasNextPage = hasNextPage;
 
-        //     return productos,totalPages, hasPrevPage,hasNextPage,prevPage,nextPage
-
-
-            
-        // }catch(error) {
-        //     response.status = "error";
-        // }
-
-        let limit = req.query.limit;
-        limit?  limit = req.query.limit : limit = 10;
-        let page = req.query.page;
-        let query = req.query.query;
-        let sort = parseInt(req.query.sort);
-        await productsModelo.paginate();
-        
-
-
-        if(query){
-            if(sort){
-                //Falta la parte del query
-                let productos = await productsModelo.paginate({},{page:page,limit:limit,sort:{price:sort}});
-                let {totalPages, hasPrevPage,hasNextPage,prevPage,nextPage}=productos;
-
-                    return productos.docs,totalPages, hasPrevPage,hasNextPage,prevPage,nextPage
-                        
-                
-            }else{
-                //falta la parte del query
-                let productos = await productsModelo.paginate({},{page:page,limit:limit});
-                let {totalPages, hasPrevPage,hasNextPage,prevPage,nextPage}=productos;
-
-                    return productos.docs,totalPages, hasPrevPage,hasNextPage,prevPage,nextPage
-                
-            } 
-        }else{
-            if(sort){
-                let productos = await productsModelo.paginate({},{page:page,limit:limit,sort:{price:sort}});
-                let {totalPages, hasPrevPage,hasNextPage,prevPage,nextPage}=productos;
-
-                    return productos.docs,totalPages, hasPrevPage,hasNextPage,prevPage,nextPage
-
-                
-            }else{
-                let productos = await productsModelo.paginate({},{limit:limit,page:page});
-                let {totalPages, hasPrevPage,hasNextPage,prevPage,nextPage}=productos;
-
-                    return productos.docs,totalPages, hasPrevPage,hasNextPage,prevPage,nextPage
-                
+            if (hasPrevPage) {
+                response.prevLink = `/api/products/?page=${prevPage}`
+                if (params.length){
+                    for (let i = 0; i < params.length; i++) {
+                        response.prevLink += `&${params[i]}`
+                    }
+                }
+            } else{
+                response.prevLink = null;
             }
-            
+            if (hasNextPage) {
+                response.nextLink = `/api/products/?page=${nextPage}`
+                if (params.length){
+                    for (let i = 0; i < params.length; i++){
+                        response.nextLink += `&${params[i]}`
+                    }
+                }
+            }else{
+                response.nextLink = null;
+            }
+            return response;
+
+        }catch(error){
+            response.status = "error";
+            return response;
         }
+
+
+
+
+
 
 
     };

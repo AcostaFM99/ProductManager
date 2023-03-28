@@ -1,5 +1,5 @@
 import { Router } from "express";
-import CarritoManagerMg from "../DAO/ManagersMg/CarritoManaferMg.js";
+import CarritoManagerMg from "../DAO/ManagersMg/CarritoManagerMg.js";
 
 const router = Router();
 

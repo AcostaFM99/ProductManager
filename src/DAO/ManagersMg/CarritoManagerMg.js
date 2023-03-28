@@ -4,19 +4,9 @@ import { carritoModelo } from '../models/carritos.models.js';
 
 export default class CarritoManagerMg{
 
-    async getCarrito(req, res){
-
-        let carrito
-        try {
-            carrito = await carritoModelo.find();
-        } catch (error) {
-            res.setHeader("Content-Type", "application/json");
-            res.status(500).json({ Message: `No hay ningun carrito creado.` });
-        }
-        res.setHeader("Content-Type", "application/json");
-        res.status(200).json({
-            carrito
-        });
+    async getCarrito(){
+        let carrito = await carritoModelo.find();
+        return  carrito;
     }
 
     async CreateCarrito(req,res){

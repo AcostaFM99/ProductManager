@@ -4,57 +4,62 @@
 <br><br>
 <h4>Nombre: {{nombre}} - Apellido: {{apellido}} - Edad: {{edad}}</h4>
 <h4>Email: {{email}}</h4>
-<h4>Rol:{{rol}}</h4>
+<h4>Rol: {{rol}}</h4>
 <br><br>
 
 <hr>
-    {{!-- <form id="params" action="">
+<br><br>
 
-            <label for="categoria">Categoría:</label>
-        <select name="categoria" id="categoria">
-            <option value="">Todas</option>
-            <option value="cat_a">cat_a</option>
-            <option value="cat_b">cat_b</option>
-            <option value="cat_c">cat_c</option>
-            <option value="cat_d">cat_d</option>
-        </select>
 
-            <label for="status">Estado:</label>
-        <select name="status" id="estado">
-            <option value="">Todos</option>
-            <option value="true">Disponible</option>
-            <option value="false">No disponible</option>
-        </select>
-
-            <label for="sort">Ordenar por precio:</label>
-        <select name="sort" id="sortSelect">
-            <option value="">No ordenar</option>
-            <option value="asc">Ascendente</option>
-            <option value="desc">Descendente</option>
-        </select>
-
-        <label for="limit">Cantidad por página:</label>
-        <input type="text" id="limitPage">
-        <label for="page">Página:</label>
-        <input type="text" id="pageNum">
-    </form>
-    <a id="goAnchor" href=""><b> Aplicar</b></a>
-
-    <label for="cartSelect">Carrito en uso:</label>
-    <select name="cart" id="cartSelect"> --}}
-
-{{!-- <ul>
-    {{#each productos}}
-    <li>
-        {{this}} 
-        <button class="agregar-al-carrito" data-producto="{{this}}">Agregar al carrito</button>
-    </li>
-        
-    {{/each}}
-</ul> --}}
-{{#each productos.payload}}
+<form id="paramsForm" action="">
+  <label for="category">Categoría:</label>
+  <select name="category" id="categorySelect">
+    <option value="">Todas</option>
+    <option value="cat_a">cat_a</option>
+    <option value="cat_b">cat_b</option>
+    <option value="cat_c">cat_c</option>
+    <option value="cat_d">cat_d</option>
+  </select>
+  <label for="status">Estado:</label>
+  <select name="status" id="statusSelect">
+    <option value="">Todos</option>
+    <option value="true">Disponible</option>
+    <option value="false">No disponible</option>
+  </select>
+  <label for="sort">Ordenar por precio:</label>
+  <select name="sort" id="sortSelect">
+    <option value="">No ordenar</option>
+    <option value="asc">Ascendente</option>
+    <option value="desc">Descendente</option>
+  </select>
+  <label for="limit">Cantidad por página:</label>
+  <input type="text" id="limitInput">
+  <label for="page">Página:</label>
+  <input type="text" id="pageInput">
+</form>
+<a id="goAnchor" href=""><b> Aplicar</b></a>
+<br>
+<br>
+{{#if products.hasPrevPage}}
+  <a href="{{products.prevLink}}">Página anterior</a>
+{{/if}}
+{{#if products.hasNextPage}}
+  <a href="{{products.nextLink}}">Página siguiente</a>
+{{/if}}
+<br>
+<br>
+<label for="cartSelect">Carrito en uso:</label>
+<select name="cart" id="cartSelect">
+{{#each carts}}
+  <option value='{{this._id}}'></option>
+{{/each}}
+</select>
+<br>
+<hr>
+{{#each products.payload}}
   <div>
     <h2>Title: {{this.title}}</h2>
+    <p>Category: {{this.category}}</p>
     <p>Description: {{this.description}}</p>
     <p>Price: ${{this.price}}</p>
     {{#if this.status}}
@@ -71,15 +76,6 @@
     <hr>
   </div>
 {{/each}}
-
-
-<a href="/api/products?page=1">Primer pagina</a>
-{{#if hasPrevPage}}
-<a href="/api/products?page={{prevPage}}">pag.Anterior</a>
-{{/if}}
-{{#if hasNextPage}}
-<a href="/api/products?page={{nextPage}}">pag.siguiente</a>
-{{/if}}
-<a href="/api/products?page={{totalPages}}">Ultima pagina</a>
+<script src="/js/productos.carrito.js"></script>
 
 
