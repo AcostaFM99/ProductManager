@@ -16,7 +16,7 @@ cartSelect.value = JSON.parse(sessionStorage.getItem("cartSelect"));
 
 const goAnchorHrefUpdate = ()=>{
     let goAnchor = document.getElementById("goAnchor");
-    let goHref = "/products";
+    let goHref = "/api/products";
     let params = [];
     let category = JSON.parse(sessionStorage.getItem("categorySelect"));
     let status = JSON.parse(sessionStorage.getItem("statusSelect"));
@@ -34,17 +34,18 @@ const goAnchorHrefUpdate = ()=>{
         for (let i = 0; i < params.length; i++){
             let nexus = i === 0 ? "?" : "&";
             goHref += `${nexus}${params[i][0]}=${params[i][1]}`;
-        }
-    }
+        };
+        
+    };
     goAnchor.href = goHref;
 };
 
-for(let i = 0; i < paramsForm.elements.length; i++){
-    paramsForm.elements[i].addEventListener("change", (e)=>{
-        sessionStorage.setItem(e.target.id, JSON.stringify(e.target.value));
-        goAnchorHrefUpdate();
+for (let i = 0; i < paramsForm.elements.length; i++) {
+    paramsForm.elements[i].addEventListener("change", (e) => {
+      sessionStorage.setItem(e.target.id, JSON.stringify(e.target.value));
+      goAnchorHrefUpdate();
     });
-}
+  }
 
 cartSelect.addEventListener("change", (e)=>{
     sessionStorage.setItem(e.target.id, JSON.stringify(e.target.value));
@@ -67,17 +68,17 @@ for (let i = 0; i < addToCartForms.length; i++) {
                 alert("Producto agregado al carrito")
             } catch (error) {
                 console.log(error);
-            }
-        }
+            };
+        };
 
         if (cartId) {
         addToCart(cartId, productId, quantity);
         } else {
         alert("Debe seleccionar un carrito");
-        }
+        };
 
         e.target.reset();
   });
-}
+};
 
 goAnchorHrefUpdate();

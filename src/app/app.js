@@ -15,6 +15,8 @@ import { messagesModelo } from "../DAO/models/messages.models.js";
 import session from "express-session";
 import mongoStore from 'connect-mongo'
 import sessionRouter from "../routes/sessions.router.js";
+import passport from "passport";
+import { inicializaEstrategias } from "../config/passport.config.js";
 
 const rutaviews= path.join(__dirname + '/app/views');
 const rutapublic= path.join(__dirname + '/public');
@@ -37,7 +39,7 @@ app.set('views', rutaviews);
 //configuracion de la carpeta publica
 app.use(express.static(rutapublic));
 
-// ????????????
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -47,9 +49,14 @@ app.use(session({
     saveUninitialized:true,
     store:mongoStore.create({
       mongoUrl:'mongodb+srv://coderhouse:coderhouse@cluster0.npycwhz.mongodb.net/?retryWrites=true&w=majority&dbName=ecommerce',
-      ttl:15
+      ttl:60
     })
-}))
+}));
+
+inicializaEstrategias();
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 //****************rutas de views**********
 app.use('/',viewsRouter);

@@ -23,6 +23,7 @@ import mongoosePaginate from "mongoose-paginate-v2";
         status: Boolean,
         stock: String,
         thumbnail: String,
+        category:String,
         fechaAlt:{
             type:Date,
             default: Date.now()

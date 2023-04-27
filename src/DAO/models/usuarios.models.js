@@ -11,7 +11,22 @@ const usuariosSchema = new Schema({
     },
     contraseña:String,
     edad:Number,
-    rol:String
+    cart:{
+        type:[
+            {
+                id:{
+                    type:Schema.Types.ObjectId,
+                    ref:'carritos'
+                }
+            }
+            
+        ]
+    }
+    ,
+    rol:{
+        type: String,
+        default: "user"
+    }
 
 });
 
