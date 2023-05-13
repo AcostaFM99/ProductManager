@@ -14,7 +14,7 @@ router.get('/realtimeproducts', async(req, res)=>{
     res.render('realTimeProducts');
 });
 
-router.get('/api/products',async(req,res)=>{
+router.get('/api/products',Middleware.auth,async(req,res)=>{
 
     let email=req.session.usuario.email;
     let nombre= req.session.usuario.nombre;  
@@ -35,13 +35,13 @@ router.get('/chat', async(req,res)=>{
     res.status(200).render('chat',{style});
 });
 
-router.get('/registro', Middleware.auth2,async(req,res)=>{
-
+router.get('/registro',Middleware.auth2,async(req,res)=>{
+    res.setHeader('Content-Type', 'text/html');
     res.render('registro');
 });
 
 router.get('/login',Middleware.auth2, async(req,res)=>{
-
+    res.setHeader('Content-Type', 'text/html');
     res.render('login');
 })
 

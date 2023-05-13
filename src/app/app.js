@@ -17,6 +17,7 @@ import mongoStore from 'connect-mongo'
 import sessionRouter from "../routes/sessions.router.js";
 import passport from "passport";
 import { inicializaEstrategias } from "../config/passport.config.js";
+import cookieParser from "cookie-parser";
 
 const rutaviews= path.join(__dirname + '/app/views');
 const rutapublic= path.join(__dirname + '/public');
@@ -36,6 +37,8 @@ app.engine('handlebars', engine({
 }));
 app.set('view engine', 'handlebars');
 app.set('views', rutaviews);
+
+
 //configuracion de la carpeta publica
 app.use(express.static(rutapublic));
 
@@ -53,6 +56,13 @@ app.use(session({
     })
 }));
 
+//****************** cookie**********************
+app.use(cookieParser());
+
+
+
+
+//**************passport*********************
 inicializaEstrategias();
 app.use(passport.initialize());
 app.use(passport.session());

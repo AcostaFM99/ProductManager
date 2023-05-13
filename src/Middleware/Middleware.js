@@ -7,10 +7,11 @@ const Middleware= {
         next();
     },
     auth2:(req,res,next)=>{
-        //esto es para que no se pueda acceder al endpoint estando logueado
-        if(req.session.usuario) res.redirect('/api/products');
+        //esto es para que no se pueda acceder al endpoint estando loguado
+        if(req.session.usuario)return res.redirect('/api/products');
         next();
     }
+    
 
 }
 
