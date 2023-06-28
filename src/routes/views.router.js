@@ -14,7 +14,7 @@ export class ViewsRouter extends Mirouter{
         this.get('/realtimeproducts', async(req, res)=>{
             res.render('realTimeProducts');
         });
-        this.get('/api/products',['PUBLIC'],Middleware.auth,async(req,res)=>{
+        this.get('/api/products',Middleware.auth,async(req,res)=>{
 
             let email=req.session.usuario.email;
             let nombre= req.session.usuario.nombre;  
@@ -29,15 +29,15 @@ export class ViewsRouter extends Mirouter{
                 email,nombre,apellido,rol,edad,products,carts
             });
         });
-        this.get('/chat',['PUBLIC'], async(req,res)=>{
+        this.get('/chat', async(req,res)=>{
             let style='chat.css'
             res.status(200).render('chat',{style});
         });
-        this.get('/registro',['PUBLIC'],Middleware.auth2,async(req,res)=>{
+        this.get('/registro',Middleware.auth2,async(req,res)=>{
             res.setHeader('Content-Type', 'text/html');
             res.render('registro');
         });
-        this.get('/login',['PUBLIC'],Middleware.auth2, async(req,res)=>{
+        this.get('/login',Middleware.auth2, async(req,res)=>{
             res.setHeader('Content-Type', 'text/html');
             res.render('login');
         });
