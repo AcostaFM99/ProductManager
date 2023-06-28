@@ -1,10 +1,10 @@
 import express from "express";
 import { __dirname } from "../utils.js";
-import productRouter from '../routes/products.router.js';
-import carritoRouter from '../routes/carrito.router.js';
-import productsMg from '../routes/products.mg.router.js'
-import carritoMg from '../routes/carrito.mg.router.js'
-import viewsRouter from '../routes/views.router.js';
+import {ProductsRouter} from "../routes/products.router.js"
+import {CarritoRouter} from '../routes/carrito.router.js';
+import { ProductsMgRouter } from '../routes/products.mg.router.js'
+import {CarritoMgRouter} from '../routes/carrito.mg.router.js'
+import {ViewsRouter} from '../routes/views.router.js';
 import Middleware from "../Middleware/Middleware.js";
 import { engine } from 'express-handlebars';
 import path from 'path';
@@ -14,10 +14,11 @@ import mongoose from 'mongoose';
 import { messagesModelo } from "../DAO/models/messages.models.js";
 import session from "express-session";
 import mongoStore from 'connect-mongo'
-import sessionRouter from "../routes/sessions.router.js";
+import { SessionRouter } from "../routes/sessions.router.js";
 import passport from "passport";
 import { inicializaEstrategias } from "../config/passport.config.js";
 import cookieParser from "cookie-parser";
+import ProductManagerMg from "../DAO/ManagersMg/ProductManagerMg.js";
 
 const rutaviews= path.join(__dirname + '/app/views');
 const rutapublic= path.join(__dirname + '/public');
@@ -41,8 +42,11 @@ app.set('views', rutaviews);
 
 //configuracion de la carpeta publica
 app.use(express.static(rutapublic));
+//****************** cookie**********************
 
+app.use(cookieParser());
 
+//**************configuracion de express**************
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -56,11 +60,14 @@ app.use(session({
     })
 }));
 
-//****************** cookie**********************
-app.use(cookieParser());
 
-
-
+//****************Routers**************************
+const sessionRouter = new SessionRouter();
+const productRouter = new ProductsRouter();
+const carritoRouter = new CarritoRouter();
+const carritoMgRouter = new CarritoMgRouter();
+const productsMgRouter = new ProductsMgRouter();
+const viewsRouter = new ViewsRouter();
 
 //**************passport*********************
 inicializaEstrategias();
@@ -69,15 +76,15 @@ app.use(passport.session());
 
 
 //****************rutas de views**********
-app.use('/',viewsRouter);
-//**************registro*********************
-app.use('/api/sessions',sessionRouter);
+app.use('/',viewsRouter.getRouter());
+//**************registro y login Sessions*********************
+app.use('/api/sessions',sessionRouter.getRouter());
 ///*************** monngose***************
-app.use('/api/products',productsMg);
-app.use('/api/carts',carritoMg);
+app.use('/api/products',productsMgRouter.getRouter());
+app.use('/api/carts',carritoMgRouter.getRouter);
 //*************** filesSystem*************
-app.use('/api/products',productRouter);
-app.use('/api/carts',carritoRouter);
+app.use('/api/products',productRouter.getRouter());
+app.use('/api/carts',carritoRouter.getRouter());
 
 
 

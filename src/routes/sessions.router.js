@@ -1,19 +1,18 @@
-import { Router } from "express";
+import { Mirouter } from "./router.js";
 import Login from "../DAO/Login/Login.js";
-import passport from "passport";
-
-export const router=Router();
 
 const lg = new Login();
 
-router.get('/errorlogin',(req, res)=>{
-    res.send('error login')
-})
 
-router.post('/registro',async(req,res)=>{await lg.registro(req,res)});
+export class SessionRouter extends Mirouter{
+    init(){
+        this.get('/errorlogin',['PUBLIC'],(req, res)=>{res.send('error login')});
 
-router.post('/login',async(req,res)=>{await lg.Login(req,res)});
+        this.post('/registro',['PUBLIC'],async(req,res)=>{await lg.registro(req,res)});
 
-router.get('/logout',async(req,res)=>{await lg.logout(req,res)});
-
-export default router;
+        this.post('/login',['PUBLIC'],async(req,res)=>{await lg.Login(req,res)});
+        
+        this.get('/logout',['PUBLIC'],async(req,res)=>{await lg.logout(req,res)});
+    }
+}
+//this.post('/registro',async(req,res)=>{await lg.registro(req,res)});
