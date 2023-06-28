@@ -1,6 +1,8 @@
 import { creaHash } from "../../utils.js";
 import { usuarioModelo } from "../models/usuarios.models.js";
 
+
+
 export default class Login{
 
 
@@ -37,6 +39,8 @@ export default class Login{
             edad:usuario.edad
         }
         
+        
+
         res.redirect('/api/products');
     }
 

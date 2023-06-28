@@ -8,12 +8,12 @@ let cr = new CarritoManager(__dirname+'/files/carrito.json')
 export class CarritoRouter extends Mirouter{
     init(){
 
-        this.post('/',['PUBLIC'],async (req,res)=>{
+        this.post('/',async (req,res)=>{
             res.setHeader('Content-Type','application/json');
             let carritoId = await cr.CreateCarrito();
             res.status(200).json({Message:`Se creo el carrito correctamente bajo el id: ${carritoId}`});
         });
-        this.get('/:cid',['PUBLIC'],async(req,res)=>{
+        this.get('/:cid',async(req,res)=>{
             res.setHeader('Content-Type','application/json');
             let Id = req.params.cid
             let respuesta = await cr.carritoById(Id);
@@ -24,7 +24,7 @@ export class CarritoRouter extends Mirouter{
             }
             
         });
-        this.post('/:cid/product/:pid',['PUBLIC'],async(req,res)=>{
+        this.post('/:cid/product/:pid',async(req,res)=>{
             res.setHeader('Content-Type','application/json');
             let carritoId = req.params.cid;
             let productId = req.params.pid;
