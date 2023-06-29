@@ -24,7 +24,7 @@ export class Mirouter{
     delete(path,permisos, ...funciones){
         this.router.delete(path,this.misRespuestas,this.handlePolices(permisos),this.applyCallbacks(funciones) )
     } 
-    
+    //
     put(path,permisos, ...funciones){
         this.router.put(path,this.misRespuestas,this.handlePolices(permisos),this.applyCallbacks(funciones) )
     } 
@@ -33,9 +33,9 @@ export class Mirouter{
        
         return callbacks.map(callback => async (...params)=>{
             try {
-                await callback.apply(this,params)
+                await callback.apply(this, params)
             } catch (error) {
-                params[1].status(500).send('Error interno del servidor')
+                params[1].status(500).send(`Error interno del servidor ${error}`)
             }
             
         })
@@ -54,6 +54,17 @@ export class Mirouter{
         handlePolices(arrayPermisos){
             return (req,res,next)=>{
                 if(arrayPermisos.includes('PUBLIC'))return next();
+                let token = req.session.token;
+                if(!token)return res.errorAutenticacion('No esta auntenticado');
+                let tokenVerif = jwt.verify(token,'miPalabraSecreta',(err,decoder)=>{
+                    if(err)return falsel;
+                    return decoder
+                });
+                if(!tokenVerif)return res.errorAutenticacion('No esta auntenticado');
+                let usuario = req.session.usuario;
+                if(!arrayPermisos.includes(usuario.rol.toOppercase()))return res.errorAutorizacion('No tiene privilegios suficientes para acceder al recurso');
+                next();
+
             }
         }
         

@@ -1,5 +1,6 @@
 import { creaHash } from "../../utils.js";
 import { usuarioModelo } from "../models/usuarios.models.js";
+import jwt from "jsonwebtoken";
 
 
 
@@ -24,6 +25,8 @@ export default class Login{
     }
 
     async Login(req,res){
+
+        
         let {email, contraseña}= req.body;
 
         if(!email || !contraseña) return res.sendStatus(400)
@@ -32,16 +35,19 @@ export default class Login{
 
         if(!usuario) return res.sendStatus(401)
 
+
         req.session.usuario={
             nombre: usuario.nombre, 
             apellido:usuario.apellido, 
             email, 
             edad:usuario.edad
         }
-        
-        
 
-        res.redirect('/api/products');
+        let usuariojwt= req.session.usuario
+        let token = jwt.sign({usuariojwt},'miPalabraSecreta')
+        req.session.token = token ;
+        
+        return res.redirect('/api/products');
     }
 
     async logout(req,res){

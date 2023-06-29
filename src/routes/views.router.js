@@ -10,18 +10,18 @@ const cm = new CarritoManagerMg();
 
 export class ViewsRouter extends Mirouter{
     init(){
-        this.get('/',async(req, res)=>{})
-        this.get('/realtimeproducts', async(req, res)=>{
+        this.get('/',['PUBLIC'],async(req, res)=>{})
+        this.get('/realtimeproducts',['PUBLIC'], async(req, res)=>{
             res.render('realTimeProducts');
         });
-        this.get('/api/products',Middleware.auth,async(req,res)=>{
+        this.get('/api/products',['PUBLIC'],Middleware.auth,async(req,res)=>{
 
             let email=req.session.usuario.email;
-            let nombre= req.session.usuario.nombre;  
-            let apellido = req.session.usuario.apellido;      
-            let producto = await usuarioModelo.findOne({email:email});
-            let rol= producto.rol;  
-            let edad = req.session.usuario.edad;
+            let cliente = await usuarioModelo.findOne({email:email});
+            let nombre= cliente.nombre;  
+            let apellido = cliente.apellido;      
+            let rol= cliente.rol;  
+            let edad = cliente.edad;
             
             let products = await pm.getProducts(req);
             let carts = await cm.getCarrito();
@@ -29,15 +29,15 @@ export class ViewsRouter extends Mirouter{
                 email,nombre,apellido,rol,edad,products,carts
             });
         });
-        this.get('/chat', async(req,res)=>{
+        this.get('/chat',['PUBLIC'], async(req,res)=>{
             let style='chat.css'
             res.status(200).render('chat',{style});
         });
-        this.get('/registro',Middleware.auth2,async(req,res)=>{
+        this.get('/registro',['PUBLIC'],Middleware.auth2,async(req,res)=>{
             res.setHeader('Content-Type', 'text/html');
             res.render('registro');
         });
-        this.get('/login',Middleware.auth2, async(req,res)=>{
+        this.get('/login',['PUBLIC'],Middleware.auth2, async(req,res)=>{
             res.setHeader('Content-Type', 'text/html');
             res.render('login');
         });
