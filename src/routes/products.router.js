@@ -1,6 +1,6 @@
 import ProductManager from "../DAO/ManagersFs/ProductManager.js";
-import { __dirname } from "../utils.js";
-import upload from "../utils.js";
+import { __dirname } from "../utils/utils.js";
+import upload from "../utils/utils.js";
 import { Mirouter } from "./router.js";
 
 

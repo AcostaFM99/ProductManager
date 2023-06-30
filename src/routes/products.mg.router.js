@@ -1,11 +1,16 @@
 import { Mirouter } from "./router.js";
 import ProductManagerMg from "../DAO/ManagersMg/ProductManagerMg.js"
+//import rolesModelo from "../DAO/models/roles.models.js"
+import { usuarioModelo } from "../DAO/models/usuarios.models.js";
 
 const mg = new ProductManagerMg;
 
 export class ProductsMgRouter extends Mirouter{
     init(){
         this.get("/", async(req, res)=>{
+            let pagina = await usuarioModelo.paginate({},{limit:4})
+            console.log(pagina)
+
             let response = await mg.getProducts(req);
             if(response.status == "success"){
                 res.status(200).json(response);

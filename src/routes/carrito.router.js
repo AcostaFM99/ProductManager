@@ -1,6 +1,6 @@
 import { Mirouter } from "./router.js";
 import CarritoManager from "../DAO/ManagersFs/CarritoManager.js";
-import {__dirname} from "../utils.js";
+import {__dirname} from "../utils/utils.js";
 
 
 let cr = new CarritoManager(__dirname+'/files/carrito.json')

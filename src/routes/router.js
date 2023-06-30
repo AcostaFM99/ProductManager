@@ -1,6 +1,6 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
-
+//Router personalizado 
 export class Mirouter{
     constructor(){
         this.router=Router();

@@ -1,6 +1,6 @@
 import fs from "fs";
 import { v4 as createID } from "uuid";
-import { __dirname } from "../../utils.js";
+import { __dirname } from "../../utils/utils.js";
 import ProductManager from "./ProductManager.js";
 
 let pm = new ProductManager(__dirname+"/files/products.json");

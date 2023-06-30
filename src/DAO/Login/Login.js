@@ -1,4 +1,4 @@
-import { creaHash } from "../../utils.js";
+import { creaHash } from "../../utils/utils.js";
 import { usuarioModelo } from "../models/usuarios.models.js";
 import jwt from "jsonwebtoken";
 

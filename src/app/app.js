@@ -1,5 +1,5 @@
 import express from "express";
-import { __dirname } from "../utils.js";
+import { __dirname } from "../utils/utils.js";
 import {ProductsRouter} from "../routes/products.router.js"
 import {CarritoRouter} from '../routes/carrito.router.js';
 import { ProductsMgRouter } from '../routes/products.mg.router.js'
@@ -19,12 +19,14 @@ import passport from "passport";
 import { inicializaEstrategias } from "../config/passport.config.js";
 import cookieParser from "cookie-parser";
 import ProductManagerMg from "../DAO/ManagersMg/ProductManagerMg.js";
+import { config } from "../config/config.dotenv.js";
+
 
 const rutaviews= path.join(__dirname + '/app/views');
 const rutapublic= path.join(__dirname + '/public');
 const rutaFilesProdc = path.join(__dirname + '/files/products.json')
 
-const PORT = 8080;
+const PORT = config.PORT;
 const app = express();
 
 const pm = new ProductManager(rutaFilesProdc);
@@ -55,11 +57,11 @@ app.use(session({
     resave: true,
     saveUninitialized:true,
     store:mongoStore.create({
-      mongoUrl:'mongodb+srv://coderhouse:coderhouse@cluster0.npycwhz.mongodb.net/?retryWrites=true&w=majority&dbName=ecommerce',
+      mongoUrl:config.MONGOURL,
       ttl:60
     })
 }));
-
+//mongodb+srv://coderhouse:coderhouse@cluster0.npycwhz.mongodb.net/?retryWrites=true&w=majority&dbName=ecommerce
 
 //****************Routers**************************
 const sessionRouter = new SessionRouter();
@@ -75,6 +77,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+
+//Rutas a los endpoints con sus Routers
 //****************rutas de views**********
 app.use('/',viewsRouter.getRouter());
 //**************registro y login Sessions*********************
@@ -88,10 +92,14 @@ app.use('/api/carts',carritoRouter.getRouter());
 
 
 
+
+
+//Se pone a escuchar el servidor
 const serverHttp = app.listen(PORT, () => {
   console.log(`Server escuchando en puerto ${PORT}`);
 });
 
+//configuracion  de server Socket
 const serverSockets = new Server(serverHttp);
 
 serverSockets.on('connection',async (socket)=>{
@@ -121,9 +129,10 @@ serverSockets.on('connection',async (socket)=>{
     
 });
 
+//coneccion de mongo con ruta segura
 const conectar= async()=>{
   try {
-    await mongoose.connect('mongodb+srv://coderhouse:coderhouse@cluster0.npycwhz.mongodb.net/?retryWrites=true&w=majority&dbName=ecommerce');
+    await mongoose.connect(config.MONGOURL);
     console.log('Conexion a DB establecida');
   } catch (error) {
     console.log(`Error de conexion al servidor BD: ${error}`);
