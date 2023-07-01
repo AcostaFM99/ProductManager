@@ -1,4 +1,5 @@
 import {Schema, model} from "mongoose";
+import paginate from "mongoose-paginate-v2"
 
     const carritoCollections ="carritos";
 
@@ -17,6 +18,9 @@ import {Schema, model} from "mongoose";
               ]
             }
     });
+
+    //carritoSchema.plugin(paginate); // esta linmea me da error 
+
     carritoSchema.pre('find',function(){
       this.populate('producto.product');
     })

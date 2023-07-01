@@ -1,12 +1,8 @@
 import { Mirouter } from "./router.js";
 import Middleware from "../Middleware/Middleware.js";
-import { usuarioModelo } from "../DAO/models/usuarios.models.js";
-import ProductManagerMg from "../DAO/ManagersMg/ProductManagerMg.js";
-import CarritoManagerMg from "../DAO/ManagersMg/CarritoManagerMg.js";
+import Login  from "../DAO/controlDeLogin.js";
 
-
-const pm = new ProductManagerMg();
-const cm = new CarritoManagerMg();
+const Us = new Login()
 
 export class ViewsRouter extends Mirouter{
     init(){
@@ -14,20 +10,7 @@ export class ViewsRouter extends Mirouter{
         this.get('/realtimeproducts',['PUBLIC'], async(req, res)=>{
             res.render('realTimeProducts');
         });
-        this.get('/api/products',['PUBLIC'],Middleware.auth,async(req,res)=>{
-
-            let email=req.session.usuario.email;
-            let cliente = await usuarioModelo.findOne({email:email});
-            let nombre= cliente.nombre;  
-            let apellido = cliente.apellido;      
-            let rol= cliente.rol;  
-            let edad = cliente.edad;
-            
-            let products = await pm.getProducts(req);
-            let carts = await cm.getCarrito();
-            res.status(200).render('home',{
-                email,nombre,apellido,rol,edad,products,carts
-            });
+        this.get('/api/products',['PUBLIC'],Middleware.auth,async(req,res)=>{let user = Us.RenderUser(req,res)
         });
         this.get('/chat',['PUBLIC'], async(req,res)=>{
             let style='chat.css'

@@ -5,7 +5,6 @@ import {CarritoRouter} from '../routes/carrito.router.js';
 import { ProductsMgRouter } from '../routes/products.mg.router.js'
 import {CarritoMgRouter} from '../routes/carrito.mg.router.js'
 import {ViewsRouter} from '../routes/views.router.js';
-import Middleware from "../Middleware/Middleware.js";
 import { engine } from 'express-handlebars';
 import path from 'path';
 import { Server } from "socket.io";
@@ -18,11 +17,11 @@ import { SessionRouter } from "../routes/sessions.router.js";
 import passport from "passport";
 import { inicializaEstrategias } from "../config/passport.config.js";
 import cookieParser from "cookie-parser";
-import ProductManagerMg from "../DAO/ManagersMg/ProductManagerMg.js";
 import { config } from "../config/config.dotenv.js";
 
 
-const rutaviews= path.join(__dirname + '/app/views');
+
+const rutaviews= path.join('C:/Users/Facundo Acosta/Desktop/ProgramacionBackEnd/ProductManager/src/app/views');
 const rutapublic= path.join(__dirname + '/public');
 const rutaFilesProdc = path.join(__dirname + '/files/products.json')
 

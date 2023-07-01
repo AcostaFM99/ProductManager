@@ -32,12 +32,13 @@ const usuariosSchema = new Schema({
     timestamps:true
 });
 
-// usuariosSchema.plugin(paginate);
-// usuariosSchema.pre('find',function(){
-//     this.populate('rol')
-// })
-// usuariosSchema.pre('findOne',function(){
-//     this.populate('rol')
-// })
+usuariosSchema.plugin(paginate); // esta linmea me da error 
+
+usuariosSchema.pre('find',function(){
+    this.populate('rol')
+})
+usuariosSchema.pre('findOne',function(){
+    this.populate('rol')
+})
 
 export const usuarioModelo= model(usuarioColeccion,usuariosSchema);
